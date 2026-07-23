@@ -4,39 +4,56 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { ArrowUpRight, Sparkles, Download, Terminal } from 'lucide-react'
 
-// Subtitle list to cycle through
-const words = ['Full Stack MERN Developer', 'Next.js Specialist', 'UI/UX Craftist', 'Backend Engineer']
+const defaultWords = ['Full Stack MERN Developer', 'Next.js Specialist', 'UI/UX Craftist', 'Backend Engineer']
 
 export default function HeroSection() {
   const [index, setIndex] = useState(0)
+  const [profile, setProfile] = useState({
+    name: 'Rohan Kirdak',
+    tagline: 'Full Stack MERN Developer',
+    bio: 'Passionate Full Stack MERN Developer focused on building modern, responsive, and scalable web applications with clean UI, smooth animations, and great user experiences.',
+    resumeUrl: '/resume.pdf',
+  })
 
-  // Cycle through words every 3 seconds
+  useEffect(() => {
+    fetch('/api/profile')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.name) {
+          setProfile((prev) => ({
+            ...prev,
+            name: data.name || prev.name,
+            tagline: data.tagline || prev.tagline,
+            bio: data.bio || prev.bio,
+            resumeUrl: data.resumeUrl || prev.resumeUrl,
+          }))
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  const words = profile.tagline ? [profile.tagline, 'Full Stack MERN Developer', 'Next.js Specialist', 'Backend Engineer'] : defaultWords
+
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % words.length)
     }, 3200)
     return () => clearInterval(interval)
-  }, [])
+  }, [words.length])
 
   return (
     <section className="min-h-screen flex items-center justify-center relative py-20 px-6 md:px-12 overflow-hidden bg-[#030014]">
-      {/* Background neon glow blobs */}
       <div className="glow-orb w-[300px] h-[300px] bg-purple-600/35 top-1/4 left-10 md:left-20" />
       <div className="glow-orb w-[300px] h-[300px] bg-cyan-500/25 bottom-1/4 right-10 md:right-20 animate-float-delayed" />
-      
-      {/* Premium matrix grid background overlay */}
       <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none z-[1]" />
 
       <div className="max-w-6xl mx-auto w-full grid lg:grid-cols-12 gap-12 items-center relative z-10">
-        
-        {/* Left text content */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="lg:col-span-7 flex flex-col items-start text-left space-y-8"
         >
-          {/* Micro-pill greeting tag */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -49,7 +66,6 @@ export default function HeroSection() {
             </span>
           </motion.div>
 
-          {/* Heading Title */}
           <div className="space-y-4">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -59,12 +75,11 @@ export default function HeroSection() {
             >
               Hi, I&apos;m <br />
               <span className="text-gradient-neon filter drop-shadow-[0_0_15px_rgba(0,212,255,0.3)]">
-                Rohan Kirdak
+                {profile.name}
               </span>
             </motion.h1>
           </div>
 
-          {/* Cycler Subtitles */}
           <div className="h-10 md:h-12 flex items-center overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.h3
@@ -80,24 +95,21 @@ export default function HeroSection() {
             </AnimatePresence>
           </div>
 
-          {/* Pitch */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-slate-400 font-light max-w-lg leading-relaxed text-sm md:text-base font-outfit"
           >
-            Passionate Full Stack MERN Developer focused on building modern, responsive, and scalable web applications with clean UI, smooth animations, and great user experiences. Skilled in React, Node.js, Express, and MongoDB, with a strong interest in creating premium digital products.
+            {profile.bio}
           </motion.p>
 
-          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
             className="flex flex-wrap gap-4 pt-2 w-full sm:w-auto"
           >
-            {/* Hire Me (gradient neon button) */}
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -108,7 +120,6 @@ export default function HeroSection() {
               <ArrowUpRight className="w-4 h-4" />
             </motion.a>
 
-            {/* View Projects (glass button) */}
             <motion.a
               whileHover={{ scale: 1.05, borderColor: 'rgba(255, 255, 255, 0.25)', backgroundColor: 'rgba(255,255,255,0.05)' }}
               whileTap={{ scale: 0.95 }}
@@ -118,11 +129,10 @@ export default function HeroSection() {
               View Work
             </motion.a>
 
-            {/* Resume button */}
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="/resume.pdf"
+              href={profile.resumeUrl}
               target="_blank"
               download="Rohan_Kirdak_Resume.pdf"
               className="px-6 py-3.5 rounded-full font-medium font-outfit text-xs text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2"
@@ -133,7 +143,6 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Right 3D abstract vector interactive orb */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -141,8 +150,6 @@ export default function HeroSection() {
           className="lg:col-span-5 relative flex justify-center items-center"
         >
           <div className="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center">
-            
-            {/* Pulsing neon glass central orb */}
             <motion.div
               animate={{ 
                 rotate: 360,
@@ -151,10 +158,9 @@ export default function HeroSection() {
               transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
               className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 via-purple-600/10 to-pink-500/20 border border-white/15 backdrop-blur-lg shadow-[0_0_80px_rgba(124,58,237,0.25)] flex items-center justify-center overflow-hidden"
             >
-              {/* Dynamic code interface mock */}
               <div className="opacity-20 text-[9px] font-mono text-cyan-300 w-[80%] text-left select-none space-y-1">
                 <p className="text-purple-400">const developer = &#123;</p>
-                <p className="pl-4">name: &quot;Rohan Kirdak&quot;,</p>
+                <p className="pl-4">name: &quot;{profile.name}&quot;,</p>
                 <p className="pl-4">role: &quot;Full-Stack MERN&quot;,</p>
                 <p className="pl-4 text-pink-400">passion: &quot;Beautiful Animation&quot;,</p>
                 <p className="pl-4 text-cyan-400">skills: [&quot;React&quot;, &quot;Next&quot;, &quot;Node&quot;],</p>
@@ -162,7 +168,6 @@ export default function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Orbiting Tech Badge: React */}
             <motion.div
               animate={{ y: [0, -15, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
@@ -172,7 +177,6 @@ export default function HeroSection() {
               <span className="text-xs font-bold text-white font-outfit">React</span>
             </motion.div>
 
-            {/* Orbiting Tech Badge: Node */}
             <motion.div
               animate={{ y: [0, 15, 0] }}
               transition={{ duration: 4, delay: 1, repeat: Infinity, ease: 'easeInOut' }}
@@ -182,7 +186,6 @@ export default function HeroSection() {
               <span className="text-xs font-bold text-white font-outfit">Node</span>
             </motion.div>
 
-            {/* Orbiting Tech Badge: Next.js */}
             <motion.div
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 4, delay: 2, repeat: Infinity, ease: 'easeInOut' }}
@@ -191,7 +194,6 @@ export default function HeroSection() {
               <span className="text-xs font-bold text-white font-outfit">Next.js 🚀</span>
             </motion.div>
 
-            {/* Central Terminal Icon */}
             <motion.div
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 3, repeat: Infinity }}
@@ -201,7 +203,6 @@ export default function HeroSection() {
             </motion.div>
           </div>
         </motion.div>
-
       </div>
     </section>
   )

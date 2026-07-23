@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import NextImage from 'next/image'
 import { fadeInUp, staggerContainer } from '@/animations/variants'
-import { projects, skills } from '@/data/portfolio'
-import { Github, ExternalLink, Code, Database, Server, Smartphone, Cpu, Shield, Monitor, Tablet, RotateCw, X, Lock, Play, Image } from 'lucide-react'
+import { projects as staticProjects, skills as staticSkills } from '@/data/portfolio'
+import { Github, ExternalLink, Code, Database, Server, Smartphone, Cpu, Shield } from 'lucide-react'
 
 // Map categories to modern Lucide icons
 const categoryIcons: Record<string, React.ReactNode> = {
@@ -19,6 +19,20 @@ const categoryIcons: Record<string, React.ReactNode> = {
 
 export function SkillsSection() {
   const [activeCategory, setActiveCategory] = useState<string>('Frontend')
+  const [skillsData, setSkillsData] = useState<Record<string, string[]>>(staticSkills)
+
+  useEffect(() => {
+    fetch('/api/skills')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.grouped && Object.keys(data.grouped).length > 0) {
+          setSkillsData(data.grouped)
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  const categories = Object.keys(skillsData)
 
   return (
     <section id="skills" className="py-24 px-6 md:px-12 relative overflow-hidden bg-[#030014]">
@@ -44,7 +58,7 @@ export function SkillsSection() {
 
         {/* Categories Tab Selector bar */}
         <div className="flex flex-wrap justify-center gap-2 mb-12 p-2 bg-slate-950/45 border border-white/5 rounded-3xl max-w-4xl mx-auto backdrop-blur-md">
-          {Object.keys(skills).map((category) => {
+          {categories.map((category) => {
             const active = activeCategory === category
             return (
               <button
@@ -81,12 +95,10 @@ export function SkillsSection() {
           animate="animate"
           className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
         >
-          {skills[activeCategory as keyof typeof skills]?.map((skill, idx) => {
-            // Generate pseudo-competency ratings to make cards visually attractive
+          {(skillsData[activeCategory] || []).map((skill, idx) => {
             const levels = ['Expert', 'Production-Ready', 'Advanced', 'Specialist']
             const level = levels[idx % levels.length]
             
-            // Skill customized glows
             const glows: Record<string, string> = {
               'React.js': 'rgba(0, 212, 255, 0.15)',
               'Next.js': 'rgba(255, 255, 255, 0.1)',
@@ -113,7 +125,6 @@ export function SkillsSection() {
                 }}
                 className="glass-card border-white/10 rounded-2xl p-6 flex flex-col justify-between items-start text-left relative overflow-hidden group shadow-lg"
               >
-                {/* Micro glow behind */}
                 <div 
                   className="absolute -right-10 -top-10 w-24 h-24 rounded-full blur-2xl opacity-40 transition-all duration-500 group-hover:scale-150"
                   style={{ backgroundColor: glowColor }}
@@ -121,7 +132,6 @@ export function SkillsSection() {
 
                 <div className="space-y-4 w-full relative z-10">
                   <div className="flex justify-between items-start w-full">
-                    {/* Minimal decorative icon */}
                     <div className="text-2xl select-none filter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
                       {skill === 'React.js' ? '⚛️' : 
                        skill === 'Next.js' ? '🚀' : 
@@ -131,7 +141,6 @@ export function SkillsSection() {
                        skill === 'Docker' ? '🐳' : 
                        skill === 'PostgreSQL' ? '🐘' : '⚡'}
                     </div>
-                    {/* Badge */}
                     <span className="px-2.5 py-0.5 text-[9px] font-bold font-outfit tracking-wider uppercase bg-white/5 border border-white/10 rounded-full text-slate-400">
                       {level}
                     </span>
@@ -144,7 +153,6 @@ export function SkillsSection() {
                   </div>
                 </div>
 
-                {/* Micro animated hover progress line */}
                 <div className="w-full h-[2px] bg-white/5 rounded-full overflow-hidden mt-6 relative z-10">
                   <motion.div
                     initial={{ x: '-100%' }}
@@ -167,7 +175,6 @@ function DefaultAbstractVisual({ id }: { id: number }) {
   return (
     <div className="w-full h-full flex items-center justify-center p-4 bg-slate-950">
       {id === 1 && (
-        /* StartUp Sensei — AI mentor chat interface */
         <div className="w-[85%] h-[80%] glass-card border-white/10 rounded-xl p-4 flex flex-col justify-between shadow-lg relative z-10 gap-2 text-left">
           <div className="flex justify-between items-center text-[10px] text-slate-500 font-mono">
             <span className="text-cyan-400 font-semibold">🤖 StartUp Sensei AI</span>
@@ -191,7 +198,6 @@ function DefaultAbstractVisual({ id }: { id: number }) {
       )}
 
       {id === 2 && (
-        /* HireWave — recruiter dashboard */
         <div className="w-[85%] h-[80%] glass-card border-white/10 rounded-xl p-4 flex flex-col gap-3 shadow-lg relative z-10 text-left">
           <div className="flex justify-between items-center">
             <span className="text-[10px] font-bold text-white font-syne">🌊 HireWave Dashboard</span>
@@ -217,7 +223,6 @@ function DefaultAbstractVisual({ id }: { id: number }) {
       )}
 
       {id === 3 && (
-        /* ShopKart — e-commerce product listing */
         <div className="w-[85%] h-[80%] flex flex-col gap-2 relative z-10 text-left">
           <div className="text-[10px] font-bold text-white font-syne flex items-center gap-1.5 mb-1">
             <span>🛒</span> ShopKart
@@ -238,7 +243,6 @@ function DefaultAbstractVisual({ id }: { id: number }) {
       )}
 
       {id === 4 && (
-        /* Project Rabbit — student project showcase platform */
         <div className="w-[85%] h-[80%] glass-card border-white/10 rounded-xl p-4 flex flex-col gap-3 shadow-lg relative z-10 text-left">
           <div className="flex justify-between items-center">
             <span className="text-[10px] font-bold text-white font-syne">🐇 Project Rabbit</span>
@@ -266,8 +270,9 @@ function DefaultAbstractVisual({ id }: { id: number }) {
   )
 }
 
-function ProjectCard({ project }: { project: typeof projects[0] }) {
+function ProjectCard({ project }: { project: any }) {
   const [imgError, setImgError] = useState(false)
+  const techList = project.technologies || project.tech || []
 
   return (
     <motion.div
@@ -275,15 +280,11 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
       whileHover={{ y: -6, borderColor: 'rgba(0,212,255,0.2)' }}
       className="glass-card border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between group text-left"
     >
-      {/* Visual illustration top panel (small box for screenshot) */}
       <div className="w-full h-56 bg-slate-950 relative overflow-hidden flex items-center justify-center border-b border-white/5">
-        
-        {/* Background moving gradients */}
         <div className="absolute inset-0 bg-gradient-to-tr from-cyan-900/10 via-purple-900/10 to-transparent opacity-40 group-hover:scale-110 transition-transform duration-700 z-0" />
 
-        {/* Image Screenshot View with auto abstract-mock fallback */}
         <div className="w-full h-full relative z-10">
-          {!imgError ? (
+          {!imgError && project.image ? (
             <NextImage
               src={project.image}
               alt={project.title}
@@ -296,10 +297,8 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
             <DefaultAbstractVisual id={project.id} />
           )}
         </div>
-
       </div>
 
-      {/* Info panel */}
       <div className="p-6 md:p-8 space-y-4">
         <h3 className="text-xl font-bold font-syne text-white group-hover:text-cyan-400 transition-colors">
           {project.title}
@@ -308,9 +307,8 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
           {project.description}
         </p>
 
-        {/* Tech stack badges */}
         <div className="flex gap-2 flex-wrap pt-2">
-          {project.tech.map((tech) => (
+          {techList.map((tech: string) => (
             <span
               key={tech}
               className="px-3 py-1 bg-white/5 border border-white/10 hover:border-cyan-400/30 text-xs font-semibold text-slate-300 rounded-full font-outfit transition-colors cursor-pointer"
@@ -320,22 +318,24 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
           ))}
         </div>
 
-        {/* Buttons block */}
         <div className="flex gap-4 pt-4">
-          {/* GitHub repository */}
-          <a
-            href={project.github}
-            target="_blank"
-            className="flex-1 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-xs font-bold font-syne uppercase text-slate-300 hover:text-white rounded-xl text-center flex items-center justify-center gap-2 transition-all cursor-pointer decoration-none"
-          >
-            <Github className="w-4 h-4" />
-            Source Code
-          </a>
-          {/* Direct External Live Link */}
+          {project.github ? (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-xs font-bold font-syne uppercase text-slate-300 hover:text-white rounded-xl text-center flex items-center justify-center gap-2 transition-all cursor-pointer decoration-none"
+            >
+              <Github className="w-4 h-4" />
+              Source Code
+            </a>
+          ) : null}
+
           {project.live ? (
             <a
               href={project.live}
               target="_blank"
+              rel="noreferrer"
               className="flex-1 py-3 bg-gradient-to-r from-cyan-400 to-purple-500 text-xs font-bold font-syne uppercase text-[#030014] rounded-xl text-center flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(0,212,255,0.4)] transition-all cursor-pointer font-bold decoration-none"
             >
               Live Link ↗
@@ -356,9 +356,21 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
 }
 
 export function ProjectsSection() {
+  const [projectsList, setProjectsList] = useState<any[]>(staticProjects)
+
+  useEffect(() => {
+    fetch('/api/projects')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProjectsList(data)
+        }
+      })
+      .catch(() => {})
+  }, [])
+
   return (
     <section id="projects" className="py-24 px-6 md:px-12 relative overflow-hidden bg-[#030014]">
-      {/* Background glow orb */}
       <div className="glow-orb w-[300px] h-[300px] bg-purple-600/10 bottom-1/4 right-0" />
 
       <div className="max-w-6xl mx-auto relative z-10">
@@ -374,7 +386,6 @@ export function ProjectsSection() {
           <div className="w-16 h-[2px] bg-purple-500 mx-auto mt-4 rounded-full" />
         </motion.div>
 
-        {/* Projects Layout (Stripe/Linear grid cards) */}
         <motion.div
           variants={staggerContainer}
           initial="initial"
@@ -382,7 +393,7 @@ export function ProjectsSection() {
           viewport={{ once: true }}
           className="grid md:grid-cols-2 gap-8"
         >
-          {projects.map((project) => (
+          {projectsList.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </motion.div>

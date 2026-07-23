@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { PageLoader, CustomCursor } from '@/components/Common'
 
 export const metadata: Metadata = {
   title: 'Rohan Kirdak - Premium Developer Portfolio',
@@ -14,9 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth bg-[#030014]" suppressHydrationWarning>
-      <body className="antialiased bg-[#030014]" suppressHydrationWarning>
-        <PageLoader />
-        <CustomCursor />
+      <body className="antialiased bg-[#030014] text-white" suppressHydrationWarning>
         {children}
       </body>
     </html>

@@ -1,169 +1,8 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect, useRef } from 'react'
 import { Github, Linkedin, Mail, Menu, X, ArrowUpRight } from 'lucide-react'
-
-// Custom lag-delayed pointer cursor
-export function CustomCursor() {
-  const [position, setPosition] = useState({ x: 0, y: 0 })
-  const [trail, setTrail] = useState({ x: 0, y: 0 })
-  const [hovered, setHovered] = useState(false)
-  const [clicked, setClicked] = useState(false)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    // Add custom cursor class to body for hide default cursor
-    document.body.classList.add('custom-cursor-active')
-
-    const moveCursor = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY })
-      setVisible(true)
-    }
-
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      if (
-        target.tagName === 'A' || 
-        target.tagName === 'BUTTON' || 
-        target.closest('a') || 
-        target.closest('button') ||
-        target.classList.contains('cursor-pointer')
-      ) {
-        setHovered(true)
-      } else {
-        setHovered(false)
-      }
-    }
-
-    const handleMouseDown = () => setClicked(true)
-    const handleMouseUp = () => setClicked(false)
-    const handleMouseLeave = () => setVisible(false)
-    const handleMouseEnter = () => setVisible(true)
-
-    window.addEventListener('mousemove', moveCursor)
-    window.addEventListener('mouseover', handleMouseOver)
-    window.addEventListener('mousedown', handleMouseDown)
-    window.addEventListener('mouseup', handleMouseUp)
-    document.addEventListener('mouseleave', handleMouseLeave)
-    document.addEventListener('mouseenter', handleMouseEnter)
-
-    return () => {
-      document.body.classList.remove('custom-cursor-active')
-      window.removeEventListener('mousemove', moveCursor)
-      window.removeEventListener('mouseover', handleMouseOver)
-      window.removeEventListener('mousedown', handleMouseDown)
-      window.removeEventListener('mouseup', handleMouseUp)
-      document.removeEventListener('mouseleave', handleMouseLeave)
-      document.removeEventListener('mouseenter', handleMouseEnter)
-    }
-  }, [])
-
-  // Trail lag logic
-  useEffect(() => {
-    let animFrame: number
-    const updateTrail = () => {
-      setTrail((prev) => {
-        const dx = position.x - prev.x
-        const dy = position.y - prev.y
-        // Lag constant (0.15 for smooth drag)
-        return {
-          x: prev.x + dx * 0.15,
-          y: prev.y + dy * 0.15,
-        }
-      })
-      animFrame = requestAnimationFrame(updateTrail)
-    }
-    animFrame = requestAnimationFrame(updateTrail)
-    return () => cancelAnimationFrame(animFrame)
-  }, [position])
-
-  if (!visible) return null
-
-  return (
-    <>
-      {/* Outer glowing lag ring */}
-      <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-cyan-400 pointer-events-none z-[99999] mix-blend-screen hidden md:block"
-        animate={{
-          x: trail.x - 16,
-          y: trail.y - 16,
-          scale: clicked ? 0.8 : hovered ? 1.6 : 1,
-          backgroundColor: hovered ? 'rgba(0, 212, 255, 0.15)' : 'rgba(0, 0, 0, 0)',
-          borderColor: hovered ? '#7c3aed' : '#00d4ff',
-          boxShadow: hovered 
-            ? '0 0 20px rgba(124, 58, 237, 0.6)' 
-            : '0 0 10px rgba(0, 212, 255, 0.3)'
-        }}
-        transition={{ type: 'tween', ease: 'backOut', duration: 0.1 }}
-      />
-      {/* Inner precise dot */}
-      <div
-        className="fixed top-0 left-0 w-2 h-2 bg-gradient-to-r from-cyan-400 to-violet-500 rounded-full pointer-events-none z-[99999] -translate-x-1/2 -translate-y-1/2 hidden md:block shadow-md shadow-cyan-400/50"
-        style={{ left: position.x, top: position.y }}
-      />
-    </>
-  )
-}
-
-// Full screen initials vector drawing preloader
-export function PageLoader() {
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false)
-    }, 2800)
-    return () => clearTimeout(timer)
-  }, [])
-
-  return (
-    <AnimatePresence>
-      {loading && (
-        <motion.div
-          className="fixed inset-0 bg-[#030014] z-[999999] flex flex-col items-center justify-center"
-          exit={{ opacity: 0, y: -50 }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-        >
-          <div className="relative w-40 h-40 flex items-center justify-center">
-            {/* SVG Logo Initials Vector Draw */}
-            <svg
-              viewBox="0 0 100 100"
-              className="w-24 h-24 text-cyan-400 fill-none stroke-current stroke-[2]"
-            >
-              <motion.path
-                d="M 25 15 L 25 85 M 25 15 L 50 15 C 65 15, 65 45, 50 45 L 25 45 M 40 45 L 60 85"
-                className="draw-path"
-                stroke="#00d4ff"
-              />
-              <motion.path
-                d="M 75 15 L 75 85 M 75 45 L 90 15 M 75 45 L 90 85"
-                className="draw-path"
-                stroke="#7c3aed"
-                style={{ animationDelay: '0.4s' }}
-              />
-            </svg>
-
-            {/* Glowing background halo */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500 to-purple-600 rounded-full blur-2xl opacity-20 animate-pulse" />
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="mt-6 text-center"
-          >
-            <h2 className="text-xl font-bold font-syne tracking-[0.2em] text-white">
-              ROHAN KIRDAK
-            </h2>
-            <div className="w-16 h-[2px] bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto mt-2 rounded-full" />
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
-}
 
 // Floating Capsule Navbar with Glassmorphism
 export function Navbar() {
@@ -256,9 +95,6 @@ export function Navbar() {
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className="w-full max-w-sm glass-card border-white/10 rounded-3xl p-8 relative overflow-hidden"
             >
-              {/* Blur accent */}
-              <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none" />
-              
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="absolute top-4 right-4 p-2 text-slate-300 hover:text-white rounded-full bg-white/5 border border-white/10 transition-colors"
@@ -288,8 +124,9 @@ export function Navbar() {
                   className="w-full border-t border-white/10 pt-6 mt-4 flex justify-center gap-4"
                 >
                   <a
-                    href="https://github.com/hustlerss"
+                    href="https://github.com/rohan-kirdak"
                     target="_blank"
+                    rel="noreferrer"
                     className="p-3 bg-white/5 border border-white/10 hover:border-cyan-400 hover:text-cyan-400 rounded-full transition-all"
                   >
                     <Github className="w-5 h-5" />
@@ -297,6 +134,7 @@ export function Navbar() {
                   <a
                     href="https://www.linkedin.com/in/rohan-kirdak-240810254"
                     target="_blank"
+                    rel="noreferrer"
                     className="p-3 bg-white/5 border border-white/10 hover:border-cyan-400 hover:text-cyan-400 rounded-full transition-all"
                   >
                     <Linkedin className="w-5 h-5" />
@@ -319,9 +157,6 @@ export function Footer() {
 
   return (
     <footer className="relative border-t border-white/5 bg-[#030014] py-12 px-6 md:px-12 overflow-hidden">
-      {/* Background orbs */}
-      <div className="absolute -bottom-24 left-1/4 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="grid md:grid-cols-4 gap-8 mb-12">
           {/* Brand Col */}
@@ -334,8 +169,9 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               <a
-                href="https://github.com/rohankirdak"
+                href="https://github.com/rohan-kirdak"
                 target="_blank"
+                rel="noreferrer"
                 className="p-2.5 bg-white/5 hover:bg-cyan-400/10 border border-white/10 hover:border-cyan-400/50 text-slate-400 hover:text-cyan-400 rounded-xl transition-all"
               >
                 <Github className="w-5 h-5" />
@@ -343,6 +179,7 @@ export function Footer() {
               <a
                 href="https://www.linkedin.com/in/rohan-kirdak-240810254"
                 target="_blank"
+                rel="noreferrer"
                 className="p-2.5 bg-white/5 hover:bg-cyan-400/10 border border-white/10 hover:border-cyan-400/50 text-slate-400 hover:text-cyan-400 rounded-xl transition-all"
               >
                 <Linkedin className="w-5 h-5" />
@@ -374,13 +211,13 @@ export function Footer() {
               </li>
               <li>
                 <a href="#projects" className="hover:text-white hover:underline decoration-cyan-400 transition-colors">
-                  Case Studies
+                  Projects
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Services Column */}
+          {/* Focus Column */}
           <div>
             <h4 className="text-sm font-semibold tracking-wider text-slate-200 uppercase mb-4 font-syne">
               Focus

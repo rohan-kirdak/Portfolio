@@ -6,7 +6,7 @@ export const projects = [
     features: ['Real-time Chat (Socket.IO)', 'OpenAI API Integration', 'Startup Roadmap Generator', 'Mentor Matching System', 'Progress Tracking Dashboard', 'Modern Responsive UI'],
     tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Socket.IO', 'OpenAI API', 'Tailwind CSS', 'Framer Motion'],
     image: '/projects/startup-sensei.png',
-    github: 'https://github.com/hustlerss/Startup-sensei-main',
+    github: 'https://github.com/rohan-kirdak/Startup-sensei-main',
     live: 'https://startup-sensei-main.vercel.app',
     featured: true
   },
@@ -17,7 +17,7 @@ export const projects = [
     features: ['User Authentication', 'Recruiter Dashboard', 'Job Posting System', 'Candidate Management', 'Responsive Modern UI', 'Backend API Integration', 'Docker & GitHub Actions CI/CD'],
     tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'JWT Auth', 'Tailwind CSS', 'Framer Motion', 'Docker', 'GitHub Actions'],
     image: '/projects/hirewave.png',
-    github: 'https://github.com/hustlerss/HireWave',
+    github: 'https://github.com/rohan-kirdak/HireWave',
     live: 'https://hire-wave-gamma.vercel.app',
     featured: true
   },
@@ -28,7 +28,7 @@ export const projects = [
     features: ['Product Listing', 'Shopping Cart', 'Authentication System', 'Order Management', 'Responsive Design', 'Dynamic Backend Integration'],
     tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS', 'Context API'],
     image: '/projects/shopkart.png',
-    github: 'https://github.com/hustlerss/Shop-kart',
+    github: 'https://github.com/rohan-kirdak/Shop-kart',
     live: 'https://shop-kart-eight-flax.vercel.app',
     featured: true
   },
@@ -39,7 +39,7 @@ export const projects = [
     features: ['Project Upload System', 'Student Portfolio Management', 'Authentication System', 'Admin Dashboard', 'Database Management'],
     tech: ['Node.js', 'Express.js', 'EJS', 'MySQL', 'Tailwind CSS', 'MVC Architecture'],
     image: '/projects/project-rabbit.png',
-    github: 'https://github.com/hustlerss/project-rabbit-1',
+    github: 'https://github.com/rohan-kirdak/project-rabbit-1',
     live: undefined,
     featured: false
   }

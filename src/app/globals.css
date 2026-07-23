@@ -112,20 +112,6 @@ body {
   -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
 }
 
-/* Premium Loader initials animation */
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.draw-path {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: dash 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Keyframes */
 @keyframes blob-pulse {
   0% {
     transform: translate(0px, 0px) scale(1);
@@ -156,23 +142,10 @@ body {
   animation-delay: 3s;
 }
 
-/* Typography styles */
 .font-syne {
   font-family: 'Syne', sans-serif;
 }
 
 .font-outfit {
   font-family: 'Outfit', sans-serif;
-}
-
-/* Hide Default Cursor on non-touch devices */
-@media (pointer: fine) {
-  .custom-cursor-active, 
-  .custom-cursor-active a, 
-  .custom-cursor-active button,
-  .custom-cursor-active select,
-  .custom-cursor-active input,
-  .custom-cursor-active textarea {
-    cursor: none !important;
-  }
 }

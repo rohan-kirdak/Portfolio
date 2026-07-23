@@ -4,53 +4,71 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model Project {
-  id        Int     @id @default(autoincrement())
-  title     String
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String
+  features     String   // JSON string of features list
+  technologies String   // JSON string of tech list
+  image        String
+  github       String
+  live         String?
+  featured     Boolean  @default(true)
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  name      String
+  category  String   // Frontend, Backend, Database, Tools, Deployment, AI Tools
+  level     String   @default("Advanced") // Expert, Advanced, Intermediate
+  icon      String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model HeroProfile {
+  id                 Int      @id @default(1)
+  name               String   @default("Rohan Kirdak")
+  tagline            String   @default("Full Stack MERN Developer")
+  bio                String   @default("Passionate developer focused on building scalable, performant web applications.")
+  yearsExp           String   @default("1.5+")
+  projectsCount      String   @default("8+")
+  contributionsCount String   @default("200+")
+  techCount          String   @default("20+")
+  resumeUrl          String   @default("/resume.pdf")
+  updatedAt          DateTime @updatedAt
+}
+
+model Experience {
+  id          Int      @id @default(autoincrement())
+  type        String   // Internship, Full-time, Education
+  company     String
+  position    String
+  duration    String
   description String
-  features  String[]
-  technologies String[]
-  image     String
-  github    String
-  live      String?
-  featured  Boolean @default(false)
-  views     Int     @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  icon        String   @default("💼")
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
 }
 
-model BlogPost {
-  id        Int     @id @default(autoincrement())
-  title     String  @unique
-  slug      String  @unique
-  content   String
-  excerpt   String?
-  published Boolean @default(false)
-  views     Int     @default(0)
-  tags      String[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Contact {
-  id        Int     @id @default(autoincrement())
+model Inquiry {
+  id        Int      @id @default(autoincrement())
   name      String
   email     String
   message   String
-  read      Boolean @default(false)
+  read      Boolean  @default(false)
   createdAt DateTime @default(now())
 }
 
-model Analytics {
-  id        Int     @id @default(autoincrement())
-  pageView  Int     @default(0)
-  blogViews Int     @default(0)
-  projectClicks Int @default(0)
-  contactForms Int @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model AdminUser {
+  id       Int    @id @default(1)
+  username String @unique @default("admin")
+  password String // Hashed password
 }

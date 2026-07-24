@@ -22,7 +22,7 @@ export function SkillsSection() {
   const [skillsData, setSkillsData] = useState<Record<string, string[]>>(staticSkills)
 
   useEffect(() => {
-    fetch('/api/skills')
+    fetch('/api/skills', { cache: 'no-store' })
       .then((res) => res.json())
       .then((data) => {
         if (data && data.grouped && Object.keys(data.grouped).length > 0) {
@@ -359,7 +359,7 @@ export function ProjectsSection() {
   const [projectsList, setProjectsList] = useState<any[]>(staticProjects)
 
   useEffect(() => {
-    fetch('/api/projects')
+    fetch('/api/projects', { cache: 'no-store' })
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {

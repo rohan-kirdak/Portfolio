@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { isAdminAuthenticated } from '@/lib/auth'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 const defaultProfile = {
   id: 1,
   name: 'Rohan Kirdak',
@@ -25,10 +28,18 @@ export async function GET() {
       profile = defaultProfile
     }
 
-    return NextResponse.json(profile)
+    return NextResponse.json(profile, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      },
+    })
   } catch (error: any) {
     console.error('Fetch profile error:', error)
-    return NextResponse.json(defaultProfile)
+    return NextResponse.json(defaultProfile, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      },
+    })
   }
 }
 
@@ -70,7 +81,11 @@ export async function PUT(request: Request) {
       ...body,
     }))
 
-    return NextResponse.json(updatedProfile)
+    return NextResponse.json(updatedProfile, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      },
+    })
   } catch (error: any) {
     console.error('Update profile error:', error)
     return NextResponse.json(defaultProfile)

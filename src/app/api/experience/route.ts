@@ -3,6 +3,9 @@ import prisma from '@/lib/prisma'
 import { isAdminAuthenticated } from '@/lib/auth'
 import { experience as staticExperience } from '@/data/portfolio'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function GET() {
   try {
     const experiences = await prisma.experience.findMany({
@@ -10,13 +13,19 @@ export async function GET() {
     }).catch(() => [])
 
     if (!experiences || experiences.length === 0) {
-      return NextResponse.json(staticExperience)
+      return NextResponse.json(staticExperience, {
+        headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' },
+      })
     }
 
-    return NextResponse.json(experiences)
+    return NextResponse.json(experiences, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' },
+    })
   } catch (error: any) {
     console.error('Fetch experience error:', error)
-    return NextResponse.json(staticExperience)
+    return NextResponse.json(staticExperience, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' },
+    })
   }
 }
 

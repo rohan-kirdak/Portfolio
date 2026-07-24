@@ -13,14 +13,14 @@ export function AboutSection() {
   const [timeline, setTimeline] = useState<any[]>([])
 
   useEffect(() => {
-    fetch('/api/profile')
+    fetch('/api/profile', { cache: 'no-store' })
       .then((res) => res.json())
       .then((data) => {
         if (data && data.name) setProfile(data)
       })
       .catch(() => {})
 
-    fetch('/api/experience')
+    fetch('/api/experience', { cache: 'no-store' })
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) setTimeline(data)

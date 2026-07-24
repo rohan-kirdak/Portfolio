@@ -3,14 +3,19 @@ import prisma from '@/lib/prisma'
 import { isAdminAuthenticated } from '@/lib/auth'
 import { skills as staticSkills } from '@/data/portfolio'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function GET() {
   try {
     const skills = await prisma.skill.findMany({
       orderBy: { order: 'asc' },
-    })
+    }).catch(() => [])
 
     if (!skills || skills.length === 0) {
-      return NextResponse.json({ grouped: staticSkills, skills: [] })
+      return NextResponse.json({ grouped: staticSkills, skills: [] }, {
+        headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' },
+      })
     }
 
     const grouped: Record<string, string[]> = {}
@@ -21,10 +26,14 @@ export async function GET() {
       grouped[s.category].push(s.name)
     })
 
-    return NextResponse.json({ grouped, skills })
+    return NextResponse.json({ grouped, skills }, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' },
+    })
   } catch (error: any) {
     console.error('Fetch skills error:', error)
-    return NextResponse.json({ grouped: staticSkills, skills: [] })
+    return NextResponse.json({ grouped: staticSkills, skills: [] }, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' },
+    })
   }
 }
 

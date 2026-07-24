@@ -3,14 +3,19 @@ import prisma from '@/lib/prisma'
 import { isAdminAuthenticated } from '@/lib/auth'
 import { projects as staticProjects } from '@/data/portfolio'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function GET() {
   try {
     const projects = await prisma.project.findMany({
       orderBy: { order: 'asc' },
-    })
+    }).catch(() => [])
 
     if (!projects || projects.length === 0) {
-      return NextResponse.json(staticProjects)
+      return NextResponse.json(staticProjects, {
+        headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' },
+      })
     }
 
     const parsedProjects = projects.map((p) => ({
@@ -20,10 +25,14 @@ export async function GET() {
       tech: p.technologies ? (typeof p.technologies === 'string' ? JSON.parse(p.technologies) : p.technologies) : [],
     }))
 
-    return NextResponse.json(parsedProjects)
+    return NextResponse.json(parsedProjects, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' },
+    })
   } catch (error: any) {
     console.error('Fetch projects error:', error)
-    return NextResponse.json(staticProjects)
+    return NextResponse.json(staticProjects, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' },
+    })
   }
 }
 

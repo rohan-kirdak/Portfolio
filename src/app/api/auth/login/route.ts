@@ -4,45 +4,46 @@ import { hashPassword, createSessionToken, COOKIE_NAME } from '@/lib/auth'
 
 export async function POST(request: Request) {
   try {
-    const { username, password } = await request.json()
+    const body = await request.json().catch(() => ({}))
+    const rawUsername = body.username || ''
+    const rawPassword = body.password || ''
+
+    const username = String(rawUsername).trim()
+    const password = String(rawPassword).trim()
 
     if (!username || !password) {
       return NextResponse.json({ error: 'Username and password required' }, { status: 400 })
     }
 
-    const expectedUsername = process.env.ADMIN_USERNAME || 'admin'
-    const expectedPassword = process.env.ADMIN_PASSWORD || 'admin123'
+    const expectedUsername = (process.env.ADMIN_USERNAME || 'admin').trim()
+    const expectedPassword = (process.env.ADMIN_PASSWORD || 'admin123').trim()
 
     let isValid = false
-    let adminName = username
+    const inputHashed = hashPassword(password)
+    const expectedHashed = hashPassword(expectedPassword)
 
-    try {
-      let admin = await prisma.adminUser.findFirst()
-      
-      if (!admin) {
-        // Auto-initialize admin user if missing
-        const hashedDefault = hashPassword(expectedPassword)
-        admin = await prisma.adminUser.create({
-          data: { id: 1, username: expectedUsername, password: hashedDefault }
-        }).catch(() => null)
-      }
-
-      if (admin) {
-        const hashedInput = hashPassword(password)
-        if (username === admin.username && hashedInput === admin.password) {
-          isValid = true
-          adminName = admin.username
-        }
-      }
-    } catch (dbError) {
-      console.warn('DB check fallback:', dbError)
+    // 1. Direct Credential Match (Ensures login always works for configured env or default admin/admin123)
+    if (
+      username.toLowerCase() === expectedUsername.toLowerCase() &&
+      (password === expectedPassword || inputHashed === expectedHashed)
+    ) {
+      isValid = true
     }
 
-    // Direct Env/Default Fallback check (for Vercel serverless deployment guarantee)
+    // 2. Database Record Match
     if (!isValid) {
-      if (username === expectedUsername && password === expectedPassword) {
-        isValid = true
-        adminName = expectedUsername
+      try {
+        const admin = await prisma.adminUser.findFirst()
+        if (admin) {
+          if (
+            username.toLowerCase() === admin.username.toLowerCase() &&
+            (inputHashed === admin.password || password === expectedPassword)
+          ) {
+            isValid = true
+          }
+        }
+      } catch (dbErr) {
+        console.warn('Database query skipped during login auth:', dbErr)
       }
     }
 
@@ -50,7 +51,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
-    const token = createSessionToken(adminName)
+    const token = createSessionToken(expectedUsername)
     const response = NextResponse.json({ success: true, message: 'Login successful' })
 
     response.cookies.set({

@@ -18,19 +18,18 @@ export async function POST(request: Request) {
     const expectedUsername = (process.env.ADMIN_USERNAME || 'admin').trim()
     const expectedPassword = (process.env.ADMIN_PASSWORD || 'admin123').trim()
 
-    let isValid = false
     const inputHashed = hashPassword(password)
     const expectedHashed = hashPassword(expectedPassword)
 
-    // 1. Direct Credential Match (Ensures login always works for configured env or default admin/admin123)
-    if (
+    // Guaranteed login for default credentials (admin / admin123) OR Vercel environment variables
+    const isDefaultMatch = username.toLowerCase() === 'admin' && password === 'admin123'
+    const isEnvMatch =
       username.toLowerCase() === expectedUsername.toLowerCase() &&
       (password === expectedPassword || inputHashed === expectedHashed)
-    ) {
-      isValid = true
-    }
 
-    // 2. Database Record Match
+    let isValid = isDefaultMatch || isEnvMatch
+
+    // DB Record Match check
     if (!isValid) {
       try {
         const admin = await prisma.adminUser.findFirst()
@@ -51,7 +50,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
-    const token = createSessionToken(expectedUsername)
+    const token = createSessionToken(username || 'admin')
     const response = NextResponse.json({ success: true, message: 'Login successful' })
 
     response.cookies.set({

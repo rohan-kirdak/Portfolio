@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { isAdminAuthenticated } from '@/lib/auth'
+import { skills as staticSkills } from '@/data/portfolio'
 
 export async function GET() {
   try {
@@ -8,10 +9,11 @@ export async function GET() {
       orderBy: { order: 'asc' },
     })
 
-    // Group skills by category for frontend convenience
-    const grouped: Record<string, string[]> = {}
-    const fullSkills: typeof skills = skills
+    if (!skills || skills.length === 0) {
+      return NextResponse.json({ grouped: staticSkills, skills: [] })
+    }
 
+    const grouped: Record<string, string[]> = {}
     skills.forEach((s) => {
       if (!grouped[s.category]) {
         grouped[s.category] = []
@@ -19,10 +21,10 @@ export async function GET() {
       grouped[s.category].push(s.name)
     })
 
-    return NextResponse.json({ grouped, skills: fullSkills })
+    return NextResponse.json({ grouped, skills })
   } catch (error: any) {
     console.error('Fetch skills error:', error)
-    return NextResponse.json({ error: 'Failed to fetch skills' }, { status: 500 })
+    return NextResponse.json({ grouped: staticSkills, skills: [] })
   }
 }
 

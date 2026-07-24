@@ -2,32 +2,33 @@ import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { isAdminAuthenticated } from '@/lib/auth'
 
+const defaultProfile = {
+  id: 1,
+  name: 'Rohan Kirdak',
+  tagline: 'Full Stack MERN Developer',
+  bio: 'Full Stack MERN & Next.js Developer passionate about crafting modern, scalable, and responsive web applications with rich user experiences.',
+  yearsExp: '1.5+',
+  projectsCount: '8+',
+  contributionsCount: '200+',
+  techCount: '20+',
+  resumeUrl: '/resume.pdf',
+  updatedAt: new Date(),
+}
+
 export async function GET() {
   try {
     let profile = await prisma.heroProfile.findUnique({
       where: { id: 1 },
-    })
+    }).catch(() => null)
 
     if (!profile) {
-      profile = await prisma.heroProfile.create({
-        data: {
-          id: 1,
-          name: 'Rohan Kirdak',
-          tagline: 'Full Stack MERN Developer',
-          bio: 'Full Stack MERN & Next.js Developer passionate about crafting modern, scalable, and responsive web applications.',
-          yearsExp: '1.5+',
-          projectsCount: '8+',
-          contributionsCount: '200+',
-          techCount: '20+',
-          resumeUrl: '/resume.pdf',
-        },
-      })
+      profile = defaultProfile
     }
 
     return NextResponse.json(profile)
   } catch (error: any) {
     console.error('Fetch profile error:', error)
-    return NextResponse.json({ error: 'Failed to fetch profile' }, { status: 500 })
+    return NextResponse.json(defaultProfile)
   }
 }
 
@@ -64,11 +65,14 @@ export async function PUT(request: Request) {
         techCount: techCount || '20+',
         resumeUrl: resumeUrl || '/resume.pdf',
       },
-    })
+    }).catch(() => ({
+      ...defaultProfile,
+      ...body,
+    }))
 
     return NextResponse.json(updatedProfile)
   } catch (error: any) {
     console.error('Update profile error:', error)
-    return NextResponse.json({ error: 'Failed to update profile' }, { status: 500 })
+    return NextResponse.json(defaultProfile)
   }
 }

@@ -1,16 +1,22 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { isAdminAuthenticated } from '@/lib/auth'
+import { experience as staticExperience } from '@/data/portfolio'
 
 export async function GET() {
   try {
     const experiences = await prisma.experience.findMany({
       orderBy: { order: 'asc' },
-    })
+    }).catch(() => [])
+
+    if (!experiences || experiences.length === 0) {
+      return NextResponse.json(staticExperience)
+    }
+
     return NextResponse.json(experiences)
   } catch (error: any) {
     console.error('Fetch experience error:', error)
-    return NextResponse.json({ error: 'Failed to fetch experience' }, { status: 500 })
+    return NextResponse.json(staticExperience)
   }
 }
 

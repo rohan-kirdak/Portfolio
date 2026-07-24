@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { isAdminAuthenticated } from '@/lib/auth'
+import { projects as staticProjects } from '@/data/portfolio'
 
 export async function GET() {
   try {
@@ -8,17 +9,21 @@ export async function GET() {
       orderBy: { order: 'asc' },
     })
 
+    if (!projects || projects.length === 0) {
+      return NextResponse.json(staticProjects)
+    }
+
     const parsedProjects = projects.map((p) => ({
       ...p,
-      features: p.features ? JSON.parse(p.features) : [],
-      technologies: p.technologies ? JSON.parse(p.technologies) : [],
-      tech: p.technologies ? JSON.parse(p.technologies) : [], // Alias for compatibility
+      features: p.features ? (typeof p.features === 'string' ? JSON.parse(p.features) : p.features) : [],
+      technologies: p.technologies ? (typeof p.technologies === 'string' ? JSON.parse(p.technologies) : p.technologies) : [],
+      tech: p.technologies ? (typeof p.technologies === 'string' ? JSON.parse(p.technologies) : p.technologies) : [],
     }))
 
     return NextResponse.json(parsedProjects)
   } catch (error: any) {
     console.error('Fetch projects error:', error)
-    return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 })
+    return NextResponse.json(staticProjects)
   }
 }
 

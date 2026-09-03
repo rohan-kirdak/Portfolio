@@ -312,14 +312,14 @@ export default function HeroSection() {
               <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#030014] via-[#030014]/70 to-transparent z-20" />
             </div>
 
-            {/* FOREGROUND FLOATING BADGES (Guaranteed Z-Index Above Poster Card) */}
+            {/* FOREGROUND FLOATING BADGES */}
 
             {/* FLOATING BADGE 1: React & Next.js (Top Left) */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               style={{ transform: 'translateZ(90px)' }}
-              className="absolute top-2 -left-6 sm:-left-8 z-[100] px-4 py-2 rounded-full bg-slate-900/95 border border-cyan-400/60 shadow-2xl shadow-cyan-500/30 flex items-center gap-2 backdrop-blur-md group-hover:border-cyan-300 transition-colors"
+              className="absolute -top-2 left-0 sm:-left-4 z-[100] px-4 py-2 rounded-full bg-slate-950/95 border border-cyan-400/70 shadow-2xl shadow-cyan-500/40 flex items-center gap-2 backdrop-blur-xl group-hover:border-cyan-300 transition-colors pointer-events-auto"
             >
               <div className="w-5 h-5 rounded-full bg-cyan-400/20 flex items-center justify-center text-xs">⚛️</div>
               <span className="text-xs font-bold text-white font-outfit tracking-wide whitespace-nowrap">React & Next.js</span>
@@ -330,7 +330,7 @@ export default function HeroSection() {
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 4, delay: 1, repeat: Infinity, ease: 'easeInOut' }}
               style={{ transform: 'translateZ(100px)' }}
-              className="absolute top-8 -right-6 sm:-right-8 z-[100] px-4 py-2 rounded-full bg-slate-900/95 border border-purple-400/60 shadow-2xl shadow-purple-500/30 flex items-center gap-2 backdrop-blur-md group-hover:border-purple-300 transition-colors"
+              className="absolute top-6 right-0 sm:-right-4 z-[100] px-4 py-2 rounded-full bg-slate-950/95 border border-purple-400/70 shadow-2xl shadow-purple-500/40 flex items-center gap-2 backdrop-blur-xl group-hover:border-purple-300 transition-colors pointer-events-auto"
             >
               <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-xs font-extrabold text-white">N</span>
               <span className="text-xs font-bold text-white font-outfit tracking-wide whitespace-nowrap">Next.js</span>
@@ -341,7 +341,7 @@ export default function HeroSection() {
               animate={{ y: [0, 12, 0] }}
               transition={{ duration: 4, delay: 1.5, repeat: Infinity, ease: 'easeInOut' }}
               style={{ transform: 'translateZ(95px)' }}
-              className="absolute bottom-28 -left-8 sm:-left-10 z-[100] px-4 py-2 rounded-full bg-slate-900/95 border border-emerald-400/60 shadow-2xl shadow-emerald-500/30 flex items-center gap-2 backdrop-blur-md group-hover:border-emerald-300 transition-colors"
+              className="absolute bottom-20 -left-2 sm:-left-6 z-[100] px-4 py-2 rounded-full bg-slate-950/95 border border-emerald-400/70 shadow-2xl shadow-emerald-500/40 flex items-center gap-2 backdrop-blur-xl group-hover:border-emerald-300 transition-colors pointer-events-auto"
             >
               <span className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px] font-bold text-emerald-400">JS</span>
               <span className="text-xs font-bold text-white font-outfit tracking-wide whitespace-nowrap">Node.js</span>
@@ -352,7 +352,7 @@ export default function HeroSection() {
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 4, delay: 0.8, repeat: Infinity, ease: 'easeInOut' }}
               style={{ transform: 'translateZ(105px)' }}
-              className="absolute bottom-24 -right-8 sm:-right-10 z-[100] px-4 py-2 rounded-full bg-slate-900/95 border border-pink-400/60 shadow-2xl shadow-pink-500/30 flex items-center gap-2 backdrop-blur-md group-hover:border-pink-300 transition-colors"
+              className="absolute bottom-24 -right-2 sm:-right-6 z-[100] px-4 py-2 rounded-full bg-slate-950/95 border border-pink-400/70 shadow-2xl shadow-pink-500/40 flex items-center gap-2 backdrop-blur-xl group-hover:border-pink-300 transition-colors pointer-events-auto"
             >
               <Sparkles className="w-4 h-4 text-pink-400" />
               <span className="text-xs font-bold text-white font-outfit tracking-wide whitespace-nowrap">AI & Gemini</span>
@@ -363,7 +363,7 @@ export default function HeroSection() {
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 4, delay: 2, repeat: Infinity, ease: 'easeInOut' }}
               style={{ transform: 'translateZ(110px)' }}
-              className="absolute -bottom-4 right-2 sm:right-4 z-[100] px-4 py-2.5 rounded-2xl bg-slate-900/95 border border-cyan-400/60 shadow-2xl shadow-black/95 flex items-center gap-3 backdrop-blur-md group-hover:border-cyan-300 transition-colors whitespace-nowrap"
+              className="absolute -bottom-6 right-2 sm:right-6 z-[100] px-4 py-2.5 rounded-2xl bg-slate-950/95 border border-cyan-400/70 shadow-2xl shadow-black flex items-center gap-3 backdrop-blur-xl group-hover:border-cyan-300 transition-colors whitespace-nowrap pointer-events-auto"
             >
               <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-cyan-400/25 to-purple-500/25 border border-cyan-400/40 flex items-center justify-center text-sm">
                 💻

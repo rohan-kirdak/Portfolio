@@ -1,55 +1,76 @@
-# Rohan Kirdak - Premium Dynamic Portfolio & Admin Panel 🚀
+# Rohan Kirdak - Full Stack MERN & Next.js Developer Portfolio 🚀
 
-A world-class, premium, highly animated personal portfolio website with a **Full-Stack Admin Panel (`/admin`)** built using **Next.js 15, React 19, Tailwind CSS, Framer Motion, Prisma ORM, and SQLite**.
-
----
-
-## ✨ Features Overview
-
-### 👑 Admin Panel (`/admin`)
-Manage your entire portfolio live from a secure, sleek glassmorphism admin dashboard without touching code or redeploying:
-- 🔐 **Secure Authentication**: Built-in JWT & HttpOnly session cookie authentication with hashed credentials.
-- 📁 **Projects Manager**: Add, edit, delete, reorder, and feature projects with tech tags, GitHub repos, live links, and image upload.
-- ⚡ **Skills Manager**: Categorize and update technical skills (Frontend, Backend, Database, Tools, Deployment, AI Tools) and proficiency levels.
-- 👤 **Hero & Bio Profile Editor**: Update full name, tagline, bio text, and highlight metrics (Years of experience, Projects count, GitHub commits).
-- 📄 **Resume/CV File Upload**: Upload new PDF resume directly from the admin panel to replace `resume.pdf` live on the site.
-- 💼 **Experience Timeline**: Add and edit work internships, full-time roles, and education timeline milestones.
-- 📥 **Inquiries Inbox**: Real contact form messages stored in SQLite database. Mark read/unread, delete, and reply via email.
+A high-performance, dynamic portfolio website with an integrated **Full-Stack Admin Panel (`/admin`)** built using **Next.js 15, React 19, Tailwind CSS, Framer Motion, Prisma ORM, and SQLite**.
 
 ---
 
-### 🎨 Frontend & Design System
-- **Modern Obsidian & Glassmorphism Aesthetic**: Vibrant dark mode gradients, blur cards, and ambient glowing accent orbs.
-- **Micro-Animations**: Powered by Framer Motion for smooth tab transitions and hover effects.
-- **Dynamic API Sync**: Public components pull live data from the database with graceful static fallbacks.
-- **Responsive Layout**: Optimized across desktop, tablet, and mobile displays.
+## 🌟 Portfolio Overview
+
+Designed and built by **Rohan Kirdak**, *Intern Software Engineer @ ScaleFull Technologies*.
+
+### 📱 Key Sections & Layout
+- **Hero Section**: Personal introduction as a **Full Stack MERN & Next.js Developer**, ScaleFull Technologies badge, concise bio, and direct action buttons (*View Projects*, *GitHub*, *Resume*).
+- **About Me**: Professional journey overview, educational background at CSMCOE / SPPU, and core focus highlights (*Full Stack Development*, *AI-Powered Applications*, *Scalable Web Systems*).
+- **Technical Skills**: Categorized technology stack without self-rated progress bars:
+  - **Frontend**: React.js · Next.js · JavaScript · TypeScript · HTML5 · CSS3 · Tailwind CSS · Framer Motion · GSAP
+  - **Backend**: Node.js · Express.js · REST APIs · GraphQL · JWT · Socket.IO
+  - **Database**: MongoDB · MySQL · PostgreSQL · Mongoose · Prisma
+  - **Cloud & DevOps**: AWS · Vercel · Docker · GitHub Actions
+  - **AI & APIs**: Gemini API · OpenAI API
+  - **Tools & CS**: Git · GitHub · Postman · DSA · OOP · Database Design · System Design
+- **Work Experience**:
+  - **Intern Software Engineer** | ScaleFull Technologies *(Jan 2026 – Present)*
+  - **Trainee** | Wisdom Sprouts | Java By Kiran | Cyber Success *(2026 – Present)*
+  - **Junior Web Developer** | Kanak Digifex NextGen Pvt. Ltd. *(Feb 2025 – Mar 2025)*
+  - **Web Development Intern** | Cloud Infotech *(Jan 2025 – Feb 2025)*
+- **Featured Projects**:
+  - **01 — HireWave**: Recruitment & Hiring Platform (JWT Auth, Role Dashboards, AI Matching, Stripe, Cloudinary)
+  - **02 — StartUp Sensei**: AI Startup Mentorship Platform (Real-time Socket.IO chat, Roadmap Generator, Solo Build)
+- **Other Projects**:
+  - **03 — ShopKart**: MERN E-Commerce Platform (Razorpay Payment, Cart & Inventory, Protected Admin)
+  - **04 — ProjectHub**: Student Project Marketplace (Academic Project Showcase, Razorpay, MySQL MVC)
+  - **05 — MindEase**: AI-Powered Wellness Application (Mood Tracking, Gemini API, AI Guidance)
+- **Leadership & Initiatives**: Technical Club President & Google Student Ambassador highlights.
+- **Education**: B.E. Computer Engineering at CSMCOE / SPPU (CGPA: 7.98/10, Final Year CGPA: 8.93/10), HSC (83%), SSC (94.80%).
+- **Contact & Footer**: Direct connect buttons (*Email Me*, *LinkedIn*, *GitHub*), functional inquiry form, and navigation footer.
+
+---
+
+## 👑 Full-Stack Admin Panel (`/admin`)
+
+Manage your entire portfolio live without touching code or redeploying:
+
+- 🔐 **Authentication**: Built-in JWT & HttpOnly session cookie authentication (`admin` / `admin123`).
+- 📁 **Projects Manager**: Add, edit, delete, reorder, feature projects, add tech tags, features, and upload project images.
+- ⚡ **Skills Manager**: Add and categorize skills dynamically across 6 domain categories.
+- 👤 **Hero Profile & Bio Editor**: Live update full name, tagline, bio, and resume download link.
+- 📄 **Resume/CV Upload**: Upload new PDF resume directly from admin to replace `resume.pdf` on the live site.
+- 💼 **Experience Timeline Manager**: Manage work experience entries.
+- 📥 **Inquiries Inbox**: View contact messages sent by recruiters/clients.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Core Framework**: [Next.js 15](https://nextjs.org/) (App Router)
-- **Frontend Library**: [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/)
-- **Database & ORM**: [Prisma ORM](https://www.prisma.io/), [SQLite](https://www.sqlite.org/) (`file:./dev.db` — Zero setup required!)
-- **Authentication**: Native Node.js `crypto` (PBKDF2 password hashing & HMAC signed tokens)
-- **Icons & UI**: [Lucide React](https://lucide.dev/), [React Hot Toast](https://react-hot-toast.com/)
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Library & Language**: [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
+- **Styling & Animations**: [Tailwind CSS](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/)
+- **Database & ORM**: [Prisma ORM](https://www.prisma.io/), [SQLite](https://www.sqlite.org/)
+- **Icons & Alerts**: [Lucide React](https://lucide.dev/), [React Hot Toast](https://react-hot-toast.com/)
 
 ---
 
-## ⚡ Zero-Setup Local Quickstart
+## ⚡ Local Setup Guide
 
-No Docker or external database servers required! Everything runs out-of-the-box using SQLite.
-
-### 1. Clone & Install Dependencies
+### 1. Clone & Install
 ```bash
-git clone https://github.com/rohan-kirdak/rohan-portfolio.git
-cd rohan-portfolio
+git clone https://github.com/rohan-kirdak/Portfolio.git
+cd Portfolio
 npm install
 ```
 
-### 2. Configure Environment Variables
-Create a `.env` file in the root directory:
+### 2. Configure Environment (`.env`)
+Create `.env` in the project root:
 ```env
 DATABASE_URL="file:./dev.db"
 ADMIN_USERNAME="admin"
@@ -62,63 +83,33 @@ JWT_SECRET="rohan-portfolio-secret-2026"
 # Push Prisma schema to SQLite database
 npx prisma db push
 
-# Seed initial projects, skills, profile, and timeline data
+# Seed initial projects, skills, profile, and timeline
 npx tsx prisma/seed.ts
 ```
 
-### 4. Run Development Server
+### 4. Start Development Server
 ```bash
 npm run dev
 ```
 
-- 🌐 **Public Website**: [http://localhost:3000](http://localhost:3000)
-- 🔑 **Admin Panel**: [http://localhost:3000/admin](http://localhost:3000/admin)
-  - **Username**: `admin`
-  - **Password**: `admin123`
+- 🌐 **Website**: `http://localhost:3000`
+- 🔑 **Admin Portal**: `http://localhost:3000/admin` (User: `admin` | Pass: `admin123`)
 
 ---
 
-## 📁 Project Structure
-
-```
-rohan-portfolio/
-├── prisma/
-│   ├── schema.prisma       # Database models for Projects, Skills, HeroProfile, Experience, Inquiry, AdminUser
-│   ├── seed.ts             # Initial database seed script
-│   └── dev.db              # Local SQLite database file
-├── public/                 # Static assets, uploaded project thumbnails, and resume.pdf
-├── src/
-│   ├── app/
-│   │   ├── admin/          # Admin Dashboard & Login pages
-│   │   ├── api/            # API Endpoints (auth, projects, skills, profile, experience, inquiries, upload)
-│   │   ├── globals.css     # Global styles & design system tokens
-│   │   ├── layout.tsx      # Root layout wrapper
-│   │   └── page.tsx        # Public homepage
-│   ├── components/         # Common navigation, footer, scroll progress
-│   ├── data/               # Default static portfolio data fallback
-│   ├── lib/                # Prisma singleton & Auth utilities
-│   └── sections/           # Hero, Projects & Skills, About & Contact sections
-├── .env                    # Environment configuration
-├── package.json
-└── tsconfig.json
-```
-
----
-
-## 📝 Available Scripts
+## 🚀 Available Scripts
 
 ```bash
-npm run dev          # Starts local dev server
-npm run build        # Compiles production build
-npm run start        # Launches production build server
-npm run type-check   # Runs TypeScript type check
+npm run dev       # Starts development server
+npm run build     # Builds production distribution
+npm run start     # Starts production server
 ```
 
 ---
 
 ## 👤 Author & Contact
 
-**Rohan Kirdak** - *Full Stack MERN & Next.js Developer*
+**Rohan Kirdak** — *Full Stack MERN & Next.js Developer*
 
 - 🌐 **Portfolio**: [https://rohan-portfolio.vercel.app](https://rohan-portfolio.vercel.app)
 - 🐙 **GitHub**: [@rohan-kirdak](https://github.com/rohan-kirdak)
@@ -127,4 +118,4 @@ npm run type-check   # Runs TypeScript type check
 
 ---
 
-Developed with ❤️ by Rohan Kirdak | 2026
+Developed with ❤️ by Rohan Kirdak

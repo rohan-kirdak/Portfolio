@@ -18,6 +18,34 @@ export default function HeroSection() {
     resumeUrl: profileInfo.resumeUrl,
   })
 
+  // 3D Parallax Mouse Tracking state
+  const [rotateX, setRotateX] = useState(0)
+  const [rotateY, setRotateY] = useState(0)
+  const [glarePosition, setGlarePosition] = useState({ x: 50, y: 50 })
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget
+    const rect = card.getBoundingClientRect()
+    const x = e.clientX - rect.left - rect.width / 2
+    const y = e.clientY - rect.top - rect.height / 2
+    
+    // Calculate tilt angles (max angle +/- 15 deg)
+    const rotX = (y / (rect.height / 2)) * -14
+    const rotY = (x / (rect.width / 2)) * 14
+    
+    const glareX = ((e.clientX - rect.left) / rect.width) * 100
+    const glareY = ((e.clientY - rect.top) / rect.height) * 100
+
+    setRotateX(rotX)
+    setRotateY(rotY)
+    setGlarePosition({ x: glareX, y: glareY })
+  }
+
+  const handleMouseLeave = () => {
+    setRotateX(0)
+    setRotateY(0)
+  }
+
   useEffect(() => {
     fetch('/api/profile', { cache: 'no-store' })
       .then((res) => res.json())
@@ -208,34 +236,61 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* RIGHT COLUMN - CIRCULAR GLOWING PORTRAIT WITH FLOATING BADGES */}
+        {/* RIGHT COLUMN - 3D INTERACTIVE PARALLAX POSTER */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: 'easeOut' }}
-          className="lg:col-span-5 relative flex justify-center items-center"
+          className="lg:col-span-5 relative flex justify-center items-center py-6"
+          style={{ perspective: 1200 }}
         >
-          <div className="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[440px] md:h-[440px] flex items-center justify-center">
-            
-            {/* Outer Circular Neon Ring with Dotted Ring */}
-            <div className="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400/20 animate-spin-slow" />
+          <motion.div
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            animate={{ rotateX, rotateY }}
+            transition={{ type: 'spring', stiffness: 220, damping: 22 }}
+            style={{ transformStyle: 'preserve-3d' }}
+            className="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[440px] md:h-[440px] flex items-center justify-center cursor-pointer select-none group"
+          >
+            {/* 3D Dynamic Lighting Glare Overlay */}
+            <div
+              className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none z-40"
+              style={{
+                background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%)`,
+              }}
+            />
+
+            {/* Layer 0: Deepest Background Glow Orb */}
+            <div
+              className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500/30 via-purple-600/30 to-pink-500/30 blur-3xl opacity-80 pointer-events-none"
+              style={{ transform: 'translateZ(-20px)' }}
+            />
+
+            {/* Layer 1: Outer Circular Neon Ring with Dotted Orbit */}
+            <div
+              className="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400/30 animate-spin-slow"
+              style={{ transform: 'translateZ(10px)' }}
+            />
 
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-2 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_60px_rgba(0,212,255,0.35)]"
+              style={{ transform: 'translateZ(15px)' }}
+              className="absolute inset-2 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_65px_rgba(0,212,255,0.45)]"
             >
               <div className="w-full h-full bg-[#030014] rounded-full" />
             </motion.div>
 
-            {/* Circular Inner Glow Portal */}
-            <div className="relative w-[92%] h-[92%] rounded-full overflow-hidden bg-gradient-to-b from-purple-900/40 via-purple-950/80 to-[#030014] border border-white/10 flex items-end justify-center shadow-inner">
-              
-              {/* Radial Cyan/Purple Backlight */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-gradient-to-tr from-cyan-500/30 to-purple-600/40 blur-2xl pointer-events-none" />
+            {/* Layer 2: Circular 3D Main Avatar Portal Card */}
+            <div
+              style={{ transform: 'translateZ(30px)' }}
+              className="relative w-[92%] h-[92%] rounded-full overflow-hidden bg-gradient-to-b from-purple-900/50 via-purple-950/90 to-[#030014] border border-white/20 flex items-end justify-center shadow-2xl shadow-cyan-500/20 group-hover:shadow-[0_0_60px_rgba(0,212,255,0.4)] transition-shadow duration-500"
+            >
+              {/* Radial Backlight */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-gradient-to-tr from-cyan-500/40 to-purple-600/50 blur-2xl pointer-events-none" />
 
-              {/* Dotted Pattern Overlay */}
-              <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
+              {/* Dotted Pattern */}
+              <div className="absolute inset-0 grid-bg opacity-35 pointer-events-none" />
 
               {/* Rohan Character Avatar Image */}
               <div className="relative w-full h-full flex items-end justify-center">
@@ -245,7 +300,7 @@ export default function HeroSection() {
                   fill
                   priority
                   sizes="(max-width: 768px) 100vw, 450px"
-                  className="object-cover object-top filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)] scale-105"
+                  className="object-cover object-top filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.85)] scale-105 group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
 
@@ -253,62 +308,69 @@ export default function HeroSection() {
               <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#030014] via-[#030014]/70 to-transparent z-10" />
             </div>
 
-            {/* FLOATING BADGE 1: React & Next.js (Top Left) */}
+            {/* Layer 3: Floating 3D Depth Badges */}
+
+            {/* 3D BADGE 1: React & Next.js (Top Left - Depth +55px) */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-4 -left-4 sm:left-0 z-30 px-3.5 py-2 rounded-full bg-slate-900/90 border border-cyan-400/40 shadow-xl shadow-cyan-500/10 flex items-center gap-2 backdrop-blur-md"
+              style={{ transform: 'translateZ(55px)' }}
+              className="absolute top-4 -left-4 sm:left-0 z-30 px-4 py-2 rounded-full bg-slate-900/95 border border-cyan-400/50 shadow-2xl shadow-cyan-500/25 flex items-center gap-2 backdrop-blur-md group-hover:border-cyan-300 transition-colors"
             >
               <div className="w-5 h-5 rounded-full bg-cyan-400/20 flex items-center justify-center text-xs">⚛️</div>
-              <span className="text-xs font-bold text-white font-outfit">React & Next.js</span>
+              <span className="text-xs font-bold text-white font-outfit tracking-wide">React & Next.js</span>
             </motion.div>
 
-            {/* FLOATING BADGE 2: Next.js (Top Right) */}
+            {/* 3D BADGE 2: Next.js (Top Right - Depth +65px) */}
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 4, delay: 1, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-12 -right-4 sm:right-2 z-30 px-3.5 py-2 rounded-full bg-slate-900/90 border border-purple-400/40 shadow-xl shadow-purple-500/10 flex items-center gap-2 backdrop-blur-md"
+              style={{ transform: 'translateZ(65px)' }}
+              className="absolute top-12 -right-4 sm:right-2 z-30 px-4 py-2 rounded-full bg-slate-900/95 border border-purple-400/50 shadow-2xl shadow-purple-500/25 flex items-center gap-2 backdrop-blur-md group-hover:border-purple-300 transition-colors"
             >
               <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-xs font-extrabold text-white">N</span>
-              <span className="text-xs font-bold text-white font-outfit">Next.js</span>
+              <span className="text-xs font-bold text-white font-outfit tracking-wide">Next.js</span>
             </motion.div>
 
-            {/* FLOATING BADGE 3: Node.js (Mid Left) */}
+            {/* 3D BADGE 3: Node.js (Mid Left - Depth +60px) */}
             <motion.div
               animate={{ y: [0, 12, 0] }}
               transition={{ duration: 4, delay: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute bottom-28 -left-6 sm:-left-2 z-30 px-3.5 py-2 rounded-full bg-slate-900/90 border border-emerald-400/40 shadow-xl shadow-emerald-500/10 flex items-center gap-2 backdrop-blur-md"
+              style={{ transform: 'translateZ(60px)' }}
+              className="absolute bottom-28 -left-6 sm:-left-2 z-30 px-4 py-2 rounded-full bg-slate-900/95 border border-emerald-400/50 shadow-2xl shadow-emerald-500/25 flex items-center gap-2 backdrop-blur-md group-hover:border-emerald-300 transition-colors"
             >
               <span className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px] font-bold text-emerald-400">JS</span>
-              <span className="text-xs font-bold text-white font-outfit">Node.js</span>
+              <span className="text-xs font-bold text-white font-outfit tracking-wide">Node.js</span>
             </motion.div>
 
-            {/* FLOATING BADGE 4: AI & Gemini (Mid Right) */}
+            {/* 3D BADGE 4: AI & Gemini (Mid Right - Depth +70px) */}
             <motion.div
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 4, delay: 0.8, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute bottom-32 -right-6 sm:-right-2 z-30 px-3.5 py-2 rounded-full bg-slate-900/90 border border-pink-400/40 shadow-xl shadow-pink-500/10 flex items-center gap-2 backdrop-blur-md"
+              style={{ transform: 'translateZ(70px)' }}
+              className="absolute bottom-32 -right-6 sm:-right-2 z-30 px-4 py-2 rounded-full bg-slate-900/95 border border-pink-400/50 shadow-2xl shadow-pink-500/25 flex items-center gap-2 backdrop-blur-md group-hover:border-pink-300 transition-colors"
             >
               <Sparkles className="w-4 h-4 text-pink-400" />
-              <span className="text-xs font-bold text-white font-outfit">AI & Gemini</span>
+              <span className="text-xs font-bold text-white font-outfit tracking-wide">AI & Gemini</span>
             </motion.div>
 
-            {/* FLOATING BADGE 5: ScaleFull Tech Card (Bottom Right Overlay) */}
+            {/* 3D BADGE 5: ScaleFull Tech Card (Bottom Right Overlay - Depth +80px) */}
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 4, delay: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -bottom-2 right-4 sm:right-8 z-30 px-4 py-2.5 rounded-2xl bg-slate-900/95 border border-cyan-400/40 shadow-2xl shadow-black/80 flex items-center gap-3 backdrop-blur-md"
+              style={{ transform: 'translateZ(80px)' }}
+              className="absolute -bottom-2 right-4 sm:right-8 z-30 px-4 py-2.5 rounded-2xl bg-slate-900/95 border border-cyan-400/50 shadow-2xl shadow-black/90 flex items-center gap-3 backdrop-blur-md group-hover:border-cyan-300 transition-colors"
             >
-              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-cyan-400/20 to-purple-500/20 border border-cyan-400/30 flex items-center justify-center text-sm">
+              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-cyan-400/25 to-purple-500/25 border border-cyan-400/40 flex items-center justify-center text-sm">
                 💻
               </div>
               <div className="text-left">
-                <p className="text-[9px] text-slate-400 font-outfit uppercase font-semibold">INTERNSHIP</p>
+                <p className="text-[9px] text-slate-400 font-outfit uppercase font-semibold tracking-wider">INTERNSHIP</p>
                 <p className="text-xs font-bold text-white font-syne">ScaleFull Technologies</p>
               </div>
             </motion.div>
 
-          </div>
+          </motion.div>
         </motion.div>
 
       </div>

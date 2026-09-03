@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Linkedin, Mail, Menu, X, ArrowUpRight } from 'lucide-react'
+import { Github, Linkedin, Mail, Menu, X, Download } from 'lucide-react'
+import { profileInfo } from '@/data/portfolio'
 
 // Floating Capsule Navbar with Glassmorphism
 export function Navbar() {
@@ -19,7 +20,9 @@ export function Navbar() {
     { name: 'Home', href: '#' },
     { name: 'About', href: '#about' },
     { name: 'Skills', href: '#skills' },
+    { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Leadership', href: '#leadership' },
     { name: 'Contact', href: '#contact' },
   ]
 
@@ -45,12 +48,12 @@ export function Navbar() {
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm font-medium text-slate-300 hover:text-white transition-colors relative py-1 cursor-pointer group"
+                className="text-xs font-semibold text-slate-300 hover:text-white transition-colors relative py-1 cursor-pointer group tracking-wide font-outfit"
               >
                 {link.name}
                 <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-purple-500 group-hover:w-full transition-all duration-300" />
@@ -58,21 +61,23 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* CTA/Social Button */}
-          <div className="hidden md:block">
+          {/* CTA / Resume Button */}
+          <div className="hidden lg:block">
             <a
-              href="#contact"
-              className="px-5 py-2 text-xs font-semibold text-white bg-white/5 border border-white/10 hover:border-cyan-400 hover:bg-cyan-400/10 rounded-full transition-all duration-300 flex items-center gap-1.5 cursor-pointer shadow-inner"
+              href={profileInfo.resumeUrl}
+              target="_blank"
+              rel="noreferrer"
+              download="Rohan_Kirdak_Resume.pdf"
+              className="px-5 py-2 text-xs font-bold font-syne text-white bg-white/5 border border-white/15 hover:border-cyan-400 hover:bg-cyan-400/10 rounded-full transition-all duration-300 flex items-center gap-1.5 cursor-pointer shadow-inner"
             >
-              Let&apos;s Talk
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              Resume ↓
             </a>
           </div>
 
           {/* Mobile Menu Trigger */}
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="md:hidden p-2 text-slate-300 hover:text-white transition-colors"
+            className="lg:hidden p-2 text-slate-300 hover:text-white transition-colors"
           >
             <Menu className="w-6 h-6" />
           </button>
@@ -86,7 +91,7 @@ export function Navbar() {
             initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
             animate={{ opacity: 1, backdropFilter: 'blur(20px)' }}
             exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-            className="fixed inset-0 bg-slate-950/80 z-[1000] flex md:hidden items-center justify-center p-4"
+            className="fixed inset-0 bg-slate-950/80 z-[1000] flex lg:hidden items-center justify-center p-4"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -102,42 +107,56 @@ export function Navbar() {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex flex-col items-center gap-6 mt-4">
+              <div className="flex flex-col items-center gap-5 mt-2">
                 {navLinks.map((link, i) => (
                   <motion.a
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
+                    transition={{ delay: i * 0.04 }}
                     key={link.name}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="text-xl font-bold font-syne text-slate-100 hover:text-cyan-400 transition-colors cursor-pointer"
+                    className="text-lg font-bold font-syne text-slate-100 hover:text-cyan-400 transition-colors cursor-pointer"
                   >
                     {link.name}
                   </motion.a>
                 ))}
 
-                <motion.div
+                <motion.a
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="w-full border-t border-white/10 pt-6 mt-4 flex justify-center gap-4"
+                  href={profileInfo.resumeUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  download="Rohan_Kirdak_Resume.pdf"
+                  className="mt-2 w-full py-3 bg-gradient-to-r from-cyan-400 to-purple-500 text-xs font-bold font-syne text-[#030014] rounded-full text-center flex items-center justify-center gap-2 shadow-lg"
+                >
+                  <Download className="w-4 h-4" />
+                  Download Resume
+                </motion.a>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35 }}
+                  className="w-full border-t border-white/10 pt-4 flex justify-center gap-4"
                 >
                   <a
-                    href="https://github.com/rohan-kirdak"
+                    href={profileInfo.github}
                     target="_blank"
                     rel="noreferrer"
                     className="p-3 bg-white/5 border border-white/10 hover:border-cyan-400 hover:text-cyan-400 rounded-full transition-all"
                   >
-                    <Github className="w-5 h-5" />
+                    <Github className="w-5 h-5 text-cyan-400" />
                   </a>
                   <a
-                    href="https://www.linkedin.com/in/rohan-kirdak-240810254"
+                    href={profileInfo.linkedin}
                     target="_blank"
                     rel="noreferrer"
                     className="p-3 bg-white/5 border border-white/10 hover:border-cyan-400 hover:text-cyan-400 rounded-full transition-all"
                   >
-                    <Linkedin className="w-5 h-5" />
+                    <Linkedin className="w-5 h-5 text-cyan-400" />
                   </a>
                 </motion.div>
               </div>
@@ -160,85 +179,109 @@ export function Footer() {
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="grid md:grid-cols-4 gap-8 mb-12">
           {/* Brand Col */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 text-left">
             <h3 className="text-xl font-bold font-syne tracking-wider text-white mb-3">
               ROHAN KIRDAK
             </h3>
-            <p className="text-sm text-slate-400 max-w-sm leading-relaxed mb-6 font-light">
-              Crafting premium high-end full-stack applications with beautiful designs, flawless performance, and modern technologies.
+            <p className="text-sm text-slate-400 max-w-md leading-relaxed mb-6 font-outfit font-light">
+              {profileInfo.footerBio}
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-center">
               <a
-                href="https://github.com/rohan-kirdak"
+                href={profileInfo.github}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 bg-white/5 hover:bg-cyan-400/10 border border-white/10 hover:border-cyan-400/50 text-slate-400 hover:text-cyan-400 rounded-xl transition-all"
+                className="px-4 py-2 bg-white/5 hover:bg-cyan-400/10 border border-white/10 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-400 rounded-xl transition-all font-outfit text-xs font-semibold flex items-center gap-2"
               >
-                <Github className="w-5 h-5" />
+                <Github className="w-4 h-4 text-cyan-400" />
+                GitHub
               </a>
               <a
-                href="https://www.linkedin.com/in/rohan-kirdak-240810254"
+                href={profileInfo.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 bg-white/5 hover:bg-cyan-400/10 border border-white/10 hover:border-cyan-400/50 text-slate-400 hover:text-cyan-400 rounded-xl transition-all"
+                className="px-4 py-2 bg-white/5 hover:bg-cyan-400/10 border border-white/10 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-400 rounded-xl transition-all font-outfit text-xs font-semibold flex items-center gap-2"
               >
-                <Linkedin className="w-5 h-5" />
+                <Linkedin className="w-4 h-4 text-cyan-400" />
+                LinkedIn
               </a>
               <a
-                href="mailto:rohankirdak8756@gmail.com"
-                className="p-2.5 bg-white/5 hover:bg-cyan-400/10 border border-white/10 hover:border-cyan-400/50 text-slate-400 hover:text-cyan-400 rounded-xl transition-all"
+                href={`mailto:${profileInfo.email}`}
+                className="px-4 py-2 bg-white/5 hover:bg-cyan-400/10 border border-white/10 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-400 rounded-xl transition-all font-outfit text-xs font-semibold flex items-center gap-2"
               >
-                <Mail className="w-5 h-5" />
+                <Mail className="w-4 h-4 text-cyan-400" />
+                Email
               </a>
             </div>
           </div>
 
           {/* Quick Navigation Links */}
-          <div>
+          <div className="text-left">
             <h4 className="text-sm font-semibold tracking-wider text-slate-200 uppercase mb-4 font-syne">
               Navigation
             </h4>
-            <ul className="space-y-2.5 text-sm text-slate-400">
+            <ul className="space-y-2 text-xs font-outfit text-slate-400">
               <li>
-                <a href="#" className="hover:text-white hover:underline decoration-cyan-400 transition-colors">
+                <a href="#" className="hover:text-white transition-colors">
                   Home
                 </a>
               </li>
               <li>
-                <a href="#about" className="hover:text-white hover:underline decoration-cyan-400 transition-colors">
-                  About Journey
+                <a href="#about" className="hover:text-white transition-colors">
+                  About Me
                 </a>
               </li>
               <li>
-                <a href="#projects" className="hover:text-white hover:underline decoration-cyan-400 transition-colors">
+                <a href="#skills" className="hover:text-white transition-colors">
+                  Skills
+                </a>
+              </li>
+              <li>
+                <a href="#experience" className="hover:text-white transition-colors">
+                  Experience
+                </a>
+              </li>
+              <li>
+                <a href="#projects" className="hover:text-white transition-colors">
                   Projects
+                </a>
+              </li>
+              <li>
+                <a href="#leadership" className="hover:text-white transition-colors">
+                  Leadership
+                </a>
+              </li>
+              <li>
+                <a href="#contact" className="hover:text-white transition-colors">
+                  Contact
                 </a>
               </li>
             </ul>
           </div>
 
           {/* Focus Column */}
-          <div>
+          <div className="text-left">
             <h4 className="text-sm font-semibold tracking-wider text-slate-200 uppercase mb-4 font-syne">
               Focus
             </h4>
-            <ul className="space-y-2.5 text-sm text-slate-400">
-              <li className="font-light">Full-Stack MERN</li>
-              <li className="font-light">Next.js Development</li>
-              <li className="font-light">Modern UX Animation</li>
-              <li className="font-light">Prisma Database Design</li>
+            <ul className="space-y-2 text-xs font-outfit text-slate-400">
+              {profileInfo.focusAreas.map((area) => (
+                <li key={area} className="font-light flex items-center gap-2">
+                  <span className="text-cyan-400">•</span> {area}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         {/* Footer Bottom copyright */}
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 font-outfit">
           <p className="font-light">
-            &copy; {new Date().getFullYear()} Rohan Kirdak. Made with passion & precision. All rights reserved.
+            &copy; {new Date().getFullYear()} Rohan Kirdak. All rights reserved.
           </p>
           <button
             onClick={scrollToTop}
-            className="px-4 py-2 bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-400/5 text-slate-400 hover:text-white rounded-full transition-all flex items-center gap-1 cursor-pointer"
+            className="px-4 py-2 bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-400/5 text-slate-400 hover:text-white rounded-full transition-all flex items-center gap-1 cursor-pointer font-syne"
           >
             Back to Top
             <span className="text-xs">&uarr;</span>

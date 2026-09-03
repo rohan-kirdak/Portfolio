@@ -1,18 +1,24 @@
 import Layout from '@/components/Layout'
 import HeroSection from '@/sections/HeroSection'
 import { ProjectsSection, SkillsSection } from '@/sections/ProjectsSkills'
-import { AboutSection, ContactSection } from '@/sections/ContactAbout'
+import {
+  AboutSection,
+  ExperienceSection,
+  EducationSection,
+  LeadershipSection,
+  ContactSection,
+} from '@/sections/ContactAbout'
 
 export const metadata = {
-  title: 'Rohan Kirdak - Full Stack MERN Developer',
-  description: 'Premium portfolio of Rohan Kirdak, a full stack MERN developer specializing in modern web applications',
-  keywords: 'MERN, React, Next.js, Web Developer, Portfolio',
+  title: 'Rohan Kirdak - Full Stack MERN & Next.js Developer',
+  description: 'Portfolio of Rohan Kirdak, a Full Stack MERN & Next.js Developer building scalable, responsive, and AI-powered web applications.',
+  keywords: 'Full Stack Developer, MERN, Next.js, React, Node.js, AI Applications, Portfolio, Rohan Kirdak',
   openGraph: {
-    title: 'Rohan Kirdak - Full Stack Developer',
-    description: 'Discover amazing web applications and projects',
+    title: 'Rohan Kirdak - Full Stack MERN & Next.js Developer',
+    description: 'Building scalable, responsive and AI-powered web applications with modern technologies.',
     type: 'website',
-    url: 'https://rohan-portfolio.vercel.app'
-  }
+    url: 'https://rohan-portfolio.vercel.app',
+  },
 }
 
 export default function Home() {
@@ -21,7 +27,10 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <SkillsSection />
+      <ExperienceSection />
       <ProjectsSection />
+      <LeadershipSection />
+      <EducationSection />
       <ContactSection />
     </Layout>
   )

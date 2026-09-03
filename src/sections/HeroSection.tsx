@@ -1,18 +1,18 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { ArrowUpRight, Sparkles, Download, Terminal } from 'lucide-react'
-
-const defaultWords = ['Full Stack MERN Developer', 'Next.js Specialist', 'UI/UX Craftist', 'Backend Engineer']
+import { ArrowUpRight, Sparkles, Download, Github, Terminal } from 'lucide-react'
+import { profileInfo } from '@/data/portfolio'
 
 export default function HeroSection() {
-  const [index, setIndex] = useState(0)
   const [profile, setProfile] = useState({
-    name: 'Rohan Kirdak',
-    tagline: 'Full Stack MERN Developer',
-    bio: 'Passionate Full Stack MERN Developer focused on building modern, responsive, and scalable web applications with clean UI, smooth animations, and great user experiences.',
-    resumeUrl: '/resume.pdf',
+    name: profileInfo.name,
+    title: profileInfo.title,
+    badge: profileInfo.badge,
+    bio: profileInfo.bio,
+    github: profileInfo.github,
+    resumeUrl: profileInfo.resumeUrl,
   })
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function HeroSection() {
           setProfile((prev) => ({
             ...prev,
             name: data.name || prev.name,
-            tagline: data.tagline || prev.tagline,
+            title: profileInfo.title,
             bio: data.bio || prev.bio,
             resumeUrl: data.resumeUrl || prev.resumeUrl,
           }))
@@ -32,17 +32,9 @@ export default function HeroSection() {
       .catch(() => {})
   }, [])
 
-  const words = profile.tagline ? [profile.tagline, 'Full Stack MERN Developer', 'Next.js Specialist', 'Backend Engineer'] : defaultWords
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % words.length)
-    }, 3200)
-    return () => clearInterval(interval)
-  }, [words.length])
-
   return (
-    <section className="min-h-screen flex items-center justify-center relative py-20 px-6 md:px-12 overflow-hidden bg-[#030014]">
+    <section className="min-h-screen flex items-center justify-center relative py-24 px-6 md:px-12 overflow-hidden bg-[#030014]">
+      {/* Background Orbs */}
       <div className="glow-orb w-[300px] h-[300px] bg-purple-600/35 top-1/4 left-10 md:left-20" />
       <div className="glow-orb w-[300px] h-[300px] bg-cyan-500/25 bottom-1/4 right-10 md:right-20 animate-float-delayed" />
       <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none z-[1]" />
@@ -52,21 +44,23 @@ export default function HeroSection() {
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="lg:col-span-7 flex flex-col items-start text-left space-y-8"
+          className="lg:col-span-7 flex flex-col items-start text-left space-y-6"
         >
+          {/* Company Badge */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5 }}
-            className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400/30 transition-all backdrop-blur-md"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400/40 transition-all backdrop-blur-md shadow-md"
           >
             <Sparkles className="w-4 h-4 text-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold tracking-wider text-slate-300 uppercase font-outfit">
-              Open to Opportunities
+            <span className="text-xs font-bold tracking-wide text-cyan-300 font-outfit">
+              {profile.badge}
             </span>
           </motion.div>
 
-          <div className="space-y-4">
+          {/* Name & Main Title */}
+          <div className="space-y-3">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -78,71 +72,72 @@ export default function HeroSection() {
                 {profile.name}
               </span>
             </motion.h1>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="text-xl md:text-3xl font-bold font-syne text-slate-200 tracking-wide"
+            >
+              {profile.title}
+            </motion.h2>
           </div>
 
-          <div className="h-10 md:h-12 flex items-center overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.h3
-                key={index}
-                initial={{ y: 24, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -24, opacity: 0 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="text-lg md:text-2xl font-semibold tracking-wide text-slate-300 font-outfit"
-              >
-                {words[index]}
-              </motion.h3>
-            </AnimatePresence>
-          </div>
-
+          {/* Bio / Tagline */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-slate-400 font-light max-w-lg leading-relaxed text-sm md:text-base font-outfit"
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="text-slate-300 font-light max-w-lg leading-relaxed text-sm md:text-base font-outfit"
           >
             {profile.bio}
           </motion.p>
 
+          {/* Action Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="flex flex-wrap gap-4 pt-2 w-full sm:w-auto"
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="flex flex-wrap gap-4 pt-4 w-full sm:w-auto items-center"
           >
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="#contact"
-              className="px-8 py-3.5 rounded-full font-bold font-syne text-sm text-[#030014] bg-gradient-to-r from-cyan-400 to-purple-500 hover:shadow-[0_0_30px_rgba(0,212,255,0.5)] transition-all cursor-pointer flex items-center gap-1.5 shadow-lg shadow-cyan-400/25"
+              href="#projects"
+              className="px-8 py-3.5 rounded-full font-bold font-syne text-sm text-[#030014] bg-gradient-to-r from-cyan-400 to-purple-500 hover:shadow-[0_0_30px_rgba(0,212,255,0.5)] transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-cyan-400/25"
             >
-              Hire Me
+              View Projects
               <ArrowUpRight className="w-4 h-4" />
             </motion.a>
 
             <motion.a
-              whileHover={{ scale: 1.05, borderColor: 'rgba(255, 255, 255, 0.25)', backgroundColor: 'rgba(255,255,255,0.05)' }}
+              whileHover={{ scale: 1.05, borderColor: 'rgba(0, 212, 255, 0.4)', backgroundColor: 'rgba(255,255,255,0.08)' }}
               whileTap={{ scale: 0.95 }}
-              href="#projects"
-              className="px-8 py-3.5 rounded-full font-bold font-syne text-sm text-white bg-white/5 border border-white/10 transition-all cursor-pointer flex items-center gap-1.5"
+              href={profile.github}
+              target="_blank"
+              rel="noreferrer"
+              className="px-7 py-3.5 rounded-full font-bold font-syne text-sm text-white bg-white/5 border border-white/15 transition-all cursor-pointer flex items-center gap-2"
             >
-              View Work
+              <Github className="w-4 h-4 text-cyan-400" />
+              GitHub
             </motion.a>
 
             <motion.a
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, borderColor: 'rgba(255, 255, 255, 0.3)', backgroundColor: 'rgba(255,255,255,0.05)' }}
               whileTap={{ scale: 0.95 }}
               href={profile.resumeUrl}
               target="_blank"
+              rel="noreferrer"
               download="Rohan_Kirdak_Resume.pdf"
-              className="px-6 py-3.5 rounded-full font-medium font-outfit text-xs text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-2"
+              className="px-6 py-3.5 rounded-full font-semibold font-outfit text-xs text-slate-300 hover:text-white border border-white/10 transition-all cursor-pointer flex items-center gap-2"
             >
-              <Download className="w-4 h-4" />
-              CV
+              <Download className="w-4 h-4 text-cyan-400" />
+              Resume
             </motion.a>
           </motion.div>
         </motion.div>
 
+        {/* Right Interactive Visual */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -158,12 +153,12 @@ export default function HeroSection() {
               transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
               className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 via-purple-600/10 to-pink-500/20 border border-white/15 backdrop-blur-lg shadow-[0_0_80px_rgba(124,58,237,0.25)] flex items-center justify-center overflow-hidden"
             >
-              <div className="opacity-20 text-[9px] font-mono text-cyan-300 w-[80%] text-left select-none space-y-1">
+              <div className="opacity-25 text-[10px] font-mono text-cyan-300 w-[80%] text-left select-none space-y-1">
                 <p className="text-purple-400">const developer = &#123;</p>
                 <p className="pl-4">name: &quot;{profile.name}&quot;,</p>
-                <p className="pl-4">role: &quot;Full-Stack MERN&quot;,</p>
-                <p className="pl-4 text-pink-400">passion: &quot;Beautiful Animation&quot;,</p>
-                <p className="pl-4 text-cyan-400">skills: [&quot;React&quot;, &quot;Next&quot;, &quot;Node&quot;],</p>
+                <p className="pl-4">role: &quot;Full Stack MERN & Next.js&quot;,</p>
+                <p className="pl-4 text-pink-400">company: &quot;ScaleFull Tech&quot;,</p>
+                <p className="pl-4 text-cyan-400">skills: [&quot;React&quot;, &quot;Next.js&quot;, &quot;Node&quot;],</p>
                 <p className="text-purple-400">&#125;;</p>
               </div>
             </motion.div>
@@ -174,7 +169,7 @@ export default function HeroSection() {
               className="absolute -top-4 left-6 p-3 glass-card border-white/10 rounded-2xl flex items-center gap-2 shadow-xl shadow-black/50"
             >
               <div className="w-6 h-6 rounded-full bg-cyan-400/20 flex items-center justify-center text-xs">⚛️</div>
-              <span className="text-xs font-bold text-white font-outfit">React</span>
+              <span className="text-xs font-bold text-white font-outfit">React.js</span>
             </motion.div>
 
             <motion.div
@@ -183,7 +178,7 @@ export default function HeroSection() {
               className="absolute -bottom-6 right-8 p-3 glass-card border-white/10 rounded-2xl flex items-center gap-2 shadow-xl shadow-black/50"
             >
               <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center text-xs">🟢</div>
-              <span className="text-xs font-bold text-white font-outfit">Node</span>
+              <span className="text-xs font-bold text-white font-outfit">Node.js</span>
             </motion.div>
 
             <motion.div

@@ -8,8 +8,8 @@ export const revalidate = 0
 const defaultProfile = {
   id: 1,
   name: 'Rohan Kirdak',
-  tagline: 'Full Stack MERN Developer',
-  bio: 'Full Stack MERN & Next.js Developer passionate about crafting modern, scalable, and responsive web applications with rich user experiences.',
+  tagline: 'Full Stack MERN & Next.js Developer',
+  bio: 'Building scalable, responsive and AI-powered web applications with modern technologies.',
   yearsExp: '1.5+',
   projectsCount: '8+',
   contributionsCount: '200+',

@@ -1,80 +1,11 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
-import { Mail, Github, Linkedin, User, Briefcase, Award, Send } from 'lucide-react'
-
-// Tabs for About me card
-type TabType = 'profile' | 'experience' | 'stats'
+import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { Mail, Github, Linkedin, Send, Award, GraduationCap, Briefcase, Crown } from 'lucide-react'
+import { experience as fallbackTimeline, education as educationData, leadership as leadershipData, profileInfo } from '@/data/portfolio'
 
 export function AboutSection() {
-  const [activeTab, setActiveTab] = useState<TabType>('profile')
-  const [profile, setProfile] = useState<any>(null)
-  const [timeline, setTimeline] = useState<any[]>([])
-
-  useEffect(() => {
-    fetch('/api/profile', { cache: 'no-store' })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.name) setProfile(data)
-      })
-      .catch(() => {})
-
-    fetch('/api/experience', { cache: 'no-store' })
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) setTimeline(data)
-      })
-      .catch(() => {})
-  }, [])
-
-  const defaultStats = [
-    { label: 'Completed Projects', value: profile?.projectsCount || '8+', icon: <Award className="w-5 h-5 text-cyan-400" /> },
-    { label: 'Technologies Mastered', value: profile?.techCount || '20+', icon: <Briefcase className="w-5 h-5 text-purple-400" /> },
-    { label: 'GitHub Contributions', value: profile?.contributionsCount || '200+', icon: <Github className="w-5 h-5 text-pink-400" /> },
-    { label: 'Years Experience', value: profile?.yearsExp || '1.5+', icon: <User className="w-5 h-5 text-indigo-400" /> },
-  ]
-
-  const fallbackTimeline = [
-    {
-      position: 'Intern Software Engineer',
-      company: 'ScaleFull Technologies',
-      duration: 'Jan 2026 - Present',
-      description: 'Collaborating to design, build, and optimize production-ready web products and scalable backend services.',
-      type: 'Internship',
-    },
-    {
-      position: 'Trainee',
-      company: 'Wisdom Sprouts | Java By Kiran | Cyber Success',
-      duration: '2026 - Present',
-      description: 'Advanced technical training in Full Stack Development, Java, Aptitude, and Interview Placement Preparation.',
-      type: 'Education',
-    },
-    {
-      position: 'Junior Web Developer',
-      company: 'Kanak Digifex NextGen Pvt. Ltd.',
-      duration: 'Feb 2025 - Mar 2025',
-      description: 'Built server-side rendered web applications using Node.js, Express.js, EJS, and MySQL.',
-      type: 'Internship',
-    },
-    {
-      position: 'Web Development Intern',
-      company: 'Cloud Infotech',
-      duration: 'Jan 2025 - Feb 2025',
-      description: 'Developed responsive user interfaces using React.js and integrated REST APIs.',
-      type: 'Internship',
-    },
-    {
-      position: 'B.E. Computer Engineering',
-      company: 'Savitribai Phule Pune University (SPPU)',
-      duration: '2022 - 2026',
-      description: 'Specialized in computer science fundamentals, full-stack web engineering, and software architectures.',
-      type: 'Education',
-    },
-  ]
-
-  const displayTimeline = timeline.length > 0 ? timeline : fallbackTimeline
-
   return (
     <section id="about" className="py-24 px-6 md:px-12 relative overflow-hidden bg-[#030014]">
       {/* Glow Blob */}
@@ -85,138 +16,220 @@ export function AboutSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-extrabold font-syne text-white tracking-wide">
-            My <span className="text-gradient-neon">Journey</span>
+            About <span className="text-gradient-neon">Me</span>
           </h2>
           <div className="w-16 h-[2px] bg-cyan-400 mx-auto mt-4 rounded-full" />
         </motion.div>
 
-        {/* Premium Tabbed Interface Card */}
-        <div className="glass-card border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-          {/* Tab Selector bar */}
-          <div className="flex border-b border-white/5 bg-slate-950/40 p-2 gap-2">
-            {(['profile', 'experience', 'stats'] as TabType[]).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`flex-1 py-3.5 rounded-2xl text-xs md:text-sm font-bold font-syne uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer ${
-                  activeTab === tab
-                    ? 'bg-gradient-to-r from-cyan-400/10 to-purple-500/10 border border-cyan-400/30 text-cyan-400 shadow-inner'
-                    : 'text-slate-400 hover:text-white hover:bg-white/5'
-                }`}
+        {/* Premium Intro Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass-card border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl space-y-8 text-left"
+        >
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 font-outfit">
+            <span className="text-base">📍</span>
+            <span>Pune, Maharashtra, India</span>
+          </div>
+
+          <p className="text-slate-200 font-light leading-relaxed text-base md:text-lg font-outfit">
+            {profileInfo.aboutIntro}
+          </p>
+
+          {/* 3 Small Highlights */}
+          <div className="grid sm:grid-cols-3 gap-4 pt-4">
+            {profileInfo.highlights.map((highlight) => (
+              <div
+                key={highlight.title}
+                className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-400/40 hover:bg-cyan-400/5 transition-all group"
               >
-                {tab === 'profile' && <User className="w-4 h-4" />}
-                {tab === 'experience' && <Briefcase className="w-4 h-4" />}
-                {tab === 'stats' && <Award className="w-4 h-4" />}
-                {tab}
-              </button>
+                <div className="w-8 h-8 rounded-xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 mb-3 group-hover:scale-110 transition-transform">
+                  ✦
+                </div>
+                <h4 className="text-sm font-bold font-syne text-white mb-1">{highlight.title}</h4>
+                <p className="text-xs text-slate-400 font-outfit">{highlight.desc}</p>
+              </div>
             ))}
           </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
 
-          {/* Tab Contents */}
-          <div className="p-8 md:p-12 min-h-[300px] flex items-center">
-            <AnimatePresence mode="wait">
-              {activeTab === 'profile' && (
-                <motion.div
-                  key="profile"
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.4 }}
-                  className="space-y-6 text-left w-full"
-                >
-                  <div className="flex items-center gap-2 text-xs text-slate-400 font-outfit">
-                    <span className="text-base">📍</span>
-                    <span>Pune, Maharashtra, India</span>
-                  </div>
+export function ExperienceSection() {
+  return (
+    <section id="experience" className="py-24 px-6 md:px-12 relative overflow-hidden bg-[#030014]">
+      <div className="glow-orb w-[250px] h-[250px] bg-cyan-500/15 bottom-1/4 left-0" />
 
-                  <h3 className="text-2xl font-bold font-syne text-white leading-snug">
-                    Building Modern Web Products <br className="hidden md:block" />
-                    <span className="text-gradient-neon">with Purpose & Passion</span>
+      <div className="max-w-5xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold font-syne text-white tracking-wide">
+            Work <span className="text-gradient-neon">Experience</span>
+          </h2>
+          <div className="w-16 h-[2px] bg-purple-500 mx-auto mt-4 rounded-full" />
+        </motion.div>
+
+        <div className="space-y-6 text-left">
+          {fallbackTimeline.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="glass-card border-white/10 rounded-2xl p-6 md:p-8 hover:border-cyan-400/30 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+            >
+              <div className="space-y-2 flex-1">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="text-xl">{item.icon}</span>
+                  <h3 className="text-xl font-bold font-syne text-white group-hover:text-cyan-300 transition-colors">
+                    {item.position}
                   </h3>
+                  <span className="px-3 py-0.5 text-[10px] font-bold rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 font-outfit uppercase">
+                    {item.type}
+                  </span>
+                </div>
+                <p className="text-base font-semibold text-cyan-400 font-outfit">
+                  {item.company}
+                </p>
+                <p className="text-sm text-slate-300 font-light leading-relaxed font-outfit">
+                  {item.description}
+                </p>
+              </div>
 
-                  <p className="text-slate-300 font-light leading-relaxed font-outfit">
-                    {profile?.bio ||
-                      "I'm a passionate Full Stack Developer from Pune with a strong focus on building modern, responsive, and scalable web applications. I love crafting premium UI/UX experiences powered by clean, efficient backend systems — turning real-world problems into polished digital products."}
-                  </p>
+              <div className="md:text-right flex-shrink-0">
+                <span className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-slate-400 font-outfit inline-block">
+                  {item.duration}
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
-                  <div className="flex flex-wrap gap-3 pt-2">
-                    {['🚀 Full Stack Development', '🎨 Premium UI/UX', '⚡ Scalable Systems'].map((tag) => (
-                      <span key={tag} className="px-4 py-1.5 text-xs font-semibold font-outfit text-slate-300 bg-white/5 border border-white/10 hover:border-cyan-400/30 rounded-full transition-colors">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+export function EducationSection() {
+  return (
+    <section id="education" className="py-24 px-6 md:px-12 relative overflow-hidden bg-[#030014]">
+      <div className="max-w-5xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold font-syne text-white tracking-wide">
+            Education <span className="text-gradient-neon">Background</span>
+          </h2>
+          <div className="w-16 h-[2px] bg-cyan-400 mx-auto mt-4 rounded-full" />
+        </motion.div>
 
-                  <div className="pt-2 border-l-2 border-cyan-400 pl-4 text-xs italic text-slate-400 font-outfit">
-                    &quot;Code with purpose. Build with passion. Deliver with precision.&quot;
-                  </div>
-                </motion.div>
-              )}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass-card border-white/10 rounded-3xl p-8 md:p-10 text-left space-y-6 shadow-2xl relative overflow-hidden"
+        >
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-purple-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 flex-shrink-0">
+              <GraduationCap className="w-6 h-6" />
+            </div>
 
-              {activeTab === 'experience' && (
-                <motion.div
-                  key="timeline"
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.4 }}
-                  className="w-full space-y-8 text-left"
-                >
-                  {displayTimeline.map((item: any, idx: number) => (
-                    <div key={idx} className="relative pl-8 border-l border-white/10 group pb-2">
-                      <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-cyan-400 group-hover:scale-150 transition-all shadow-[0_0_8px_#00d4ff]" />
-                      
-                      <div className="flex flex-col sm:flex-row sm:justify-between items-start gap-1 mb-2">
-                        <div>
-                          <h4 className="text-lg font-bold font-syne text-white flex items-center gap-2">
-                            {item.position || item.role}
-                            <span className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-white/5 border border-white/10 text-slate-400 font-outfit">
-                              {item.type || 'Internship'}
-                            </span>
-                          </h4>
-                          <p className="text-sm font-medium text-cyan-400 font-outfit">{item.company}</p>
-                        </div>
-                        <span className="text-xs font-semibold text-slate-500 font-outfit">{item.duration}</span>
-                      </div>
-                      <p className="text-sm text-slate-400 font-light leading-relaxed font-outfit">{item.description || item.desc}</p>
-                    </div>
-                  ))}
-                </motion.div>
-              )}
+            <div className="space-y-2 flex-1">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <h3 className="text-2xl font-bold font-syne text-white">
+                  {educationData.degree}
+                </h3>
+                <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 font-outfit w-fit">
+                  {educationData.duration}
+                </span>
+              </div>
 
-              {activeTab === 'stats' && (
-                <motion.div
-                  key="stats"
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.4 }}
-                  className="w-full grid grid-cols-2 md:grid-cols-4 gap-6"
-                >
-                  {defaultStats.map((stat, i) => (
-                    <motion.div
-                      key={i}
-                      whileHover={{ scale: 1.05 }}
-                      className="p-6 rounded-2xl bg-white/5 border border-white/15 flex flex-col items-center justify-center text-center shadow-inner hover:border-cyan-400/40 transition-colors"
-                    >
-                      <div className="p-3 bg-white/5 rounded-xl border border-white/10 mb-4 shadow-md">
-                        {stat.icon}
-                      </div>
-                      <p className="text-3xl font-extrabold text-white font-syne mb-1 tracking-tight">
-                        {stat.value}
-                      </p>
-                      <p className="text-xs text-slate-400 font-medium font-outfit uppercase tracking-wider">
-                        {stat.label}
-                      </p>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
+              <p className="text-lg font-semibold text-cyan-300 font-outfit">
+                {educationData.college}
+              </p>
+
+              <p className="text-sm text-slate-400 font-outfit">
+                {educationData.university}
+              </p>
+
+              <div className="pt-3 flex flex-wrap gap-3">
+                <span className="px-4 py-2 rounded-xl bg-cyan-400/10 border border-cyan-400/30 text-xs font-bold text-cyan-300 font-outfit">
+                  CGPA: {educationData.cgpa}
+                </span>
+                <span className="px-4 py-2 rounded-xl bg-purple-500/10 border border-purple-500/30 text-xs font-bold text-purple-300 font-outfit">
+                  Final Year CGPA: {educationData.finalCgpa}
+                </span>
+              </div>
+            </div>
           </div>
+
+          <div className="border-t border-white/10 pt-6 grid sm:grid-cols-2 gap-4">
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+              <span className="text-xs font-bold font-syne text-white">{educationData.hsc}</span>
+              <span className="text-xs font-semibold text-slate-400 font-outfit">Higher Secondary</span>
+            </div>
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+              <span className="text-xs font-bold font-syne text-white">{educationData.ssc}</span>
+              <span className="text-xs font-semibold text-slate-400 font-outfit">Secondary School</span>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+export function LeadershipSection() {
+  return (
+    <section id="leadership" className="py-20 px-6 md:px-12 relative overflow-hidden bg-[#030014]">
+      <div className="max-w-5xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl md:text-4xl font-extrabold font-syne text-white tracking-wide">
+            Leadership & <span className="text-gradient-neon">Initiatives</span>
+          </h2>
+          <div className="w-12 h-[2px] bg-purple-500 mx-auto mt-3 rounded-full" />
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-6 text-left">
+          {leadershipData.map((item) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -4 }}
+              className="glass-card border-white/10 rounded-2xl p-6 hover:border-purple-400/40 transition-all flex flex-col justify-between space-y-4"
+            >
+              <div className="space-y-2">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{item.icon}</span>
+                  <h3 className="text-lg font-bold font-syne text-white">{item.title}</h3>
+                </div>
+                <p className="text-xs font-semibold text-cyan-400 font-outfit">{item.organization}</p>
+                <p className="text-xs text-slate-300 font-light leading-relaxed font-outfit">
+                  {item.description}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -265,9 +278,12 @@ export function ContactSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-extrabold font-syne text-white tracking-wide">
-            Get In <span className="text-gradient-neon">Touch</span>
+            {profileInfo.contactHeading}
           </h2>
-          <div className="w-16 h-[2px] bg-purple-500 mx-auto mt-4 rounded-full" />
+          <p className="text-slate-400 font-light max-w-lg mx-auto mt-4 text-sm font-outfit">
+            {profileInfo.contactSubtitle}
+          </p>
+          <div className="w-16 h-[2px] bg-purple-500 mx-auto mt-6 rounded-full" />
         </motion.div>
 
         <div className="grid lg:grid-cols-12 gap-12 items-stretch">
@@ -281,15 +297,15 @@ export function ContactSection() {
           >
             <div className="space-y-8 text-left">
               <div>
-                <h3 className="text-2xl font-bold font-syne text-white mb-2">Let&apos;s build something epic!</h3>
-                <p className="text-slate-400 font-light text-sm font-outfit">
-                  Fill in the form or contact me directly via email or LinkedIn.
+                <h3 className="text-2xl font-bold font-syne text-white mb-2">Connect Directly</h3>
+                <p className="text-slate-400 font-light text-xs font-outfit">
+                  Feel free to reach out via email or connect on professional networks.
                 </p>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <a
-                  href="mailto:rohankirdak8756@gmail.com"
+                  href={`mailto:${profileInfo.email}`}
                   className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-400 hover:bg-cyan-400/5 transition-all group"
                 >
                   <div className="p-3 bg-white/5 border border-white/10 rounded-xl group-hover:border-cyan-400/50 text-cyan-400 transition-all">
@@ -297,14 +313,14 @@ export function ContactSection() {
                   </div>
                   <div className="text-left">
                     <p className="text-xs text-slate-500 font-medium font-outfit uppercase">Email Me</p>
-                    <p className="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">
-                      rohankirdak8756@gmail.com
+                    <p className="text-sm font-bold text-slate-200 group-hover:text-cyan-300 transition-colors">
+                      {profileInfo.email}
                     </p>
                   </div>
                 </a>
 
                 <a
-                  href="https://www.linkedin.com/in/rohan-kirdak-240810254"
+                  href={profileInfo.linkedin}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-400 hover:bg-cyan-400/5 transition-all group"
@@ -313,37 +329,36 @@ export function ContactSection() {
                     <Linkedin className="w-5 h-5" />
                   </div>
                   <div className="text-left">
-                    <p className="text-xs text-slate-500 font-medium font-outfit uppercase">Connect</p>
-                    <p className="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">
+                    <p className="text-xs text-slate-500 font-medium font-outfit uppercase">LinkedIn</p>
+                    <p className="text-sm font-bold text-slate-200 group-hover:text-cyan-300 transition-colors">
                       Rohan Kirdak
+                    </p>
+                  </div>
+                </a>
+
+                <a
+                  href={profileInfo.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-400 hover:bg-cyan-400/5 transition-all group"
+                >
+                  <div className="p-3 bg-white/5 border border-white/10 rounded-xl group-hover:border-cyan-400/50 text-cyan-400 transition-all">
+                    <Github className="w-5 h-5" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs text-slate-500 font-medium font-outfit uppercase">GitHub</p>
+                    <p className="text-sm font-bold text-slate-200 group-hover:text-cyan-300 transition-colors">
+                      rohan-kirdak
                     </p>
                   </div>
                 </a>
               </div>
             </div>
 
-            <div className="mt-8 border-t border-white/10 pt-6 flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-300 font-outfit">Follow my builds</span>
-              <div className="flex gap-3">
-                <a
-                  href="https://github.com/rohan-kirdak"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-3 bg-slate-900/90 border border-white/20 hover:border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 rounded-xl transition-all shadow-lg flex items-center justify-center cursor-pointer"
-                  title="GitHub Profile"
-                >
-                  <Github className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/rohan-kirdak-240810254"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-3 bg-slate-900/90 border border-white/20 hover:border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 rounded-xl transition-all shadow-lg flex items-center justify-center cursor-pointer"
-                  title="LinkedIn Profile"
-                >
-                  <Linkedin className="w-5 h-5" />
-                </a>
-              </div>
+            <div className="mt-8 border-t border-white/10 pt-6 text-left">
+              <span className="text-xs font-semibold text-slate-400 font-outfit">
+                Open for Software Developer Roles & Collaborations
+              </span>
             </div>
           </motion.div>
 
@@ -397,7 +412,7 @@ export function ContactSection() {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   onFocus={() => setActiveInput('message')}
                   onBlur={() => setActiveInput(null)}
-                  placeholder="Tell me about your project..."
+                  placeholder="Tell me about your opportunity or project..."
                   className={`w-full px-5 py-4 bg-slate-950/50 border rounded-2xl focus:outline-none transition-all duration-300 font-outfit text-white placeholder-slate-500 ${
                     activeInput === 'message' 
                       ? 'border-cyan-400/80 shadow-[0_0_15px_rgba(0,212,255,0.15)] bg-slate-950/80' 
@@ -419,11 +434,11 @@ export function ContactSection() {
               >
                 {submitted ? (
                   <>
-                    <span>✓ MESSAGE TRANSMITTED & SAVED TO DB</span>
+                    <span>✓ MESSAGE SENT</span>
                   </>
                 ) : (
                   <>
-                    <span>{submitting ? 'TRANSMITTING...' : 'SEND ENQUIRY'}</span>
+                    <span>{submitting ? 'SENDING...' : 'SEND MESSAGE'}</span>
                     <Send className="w-4 h-4" />
                   </>
                 )}

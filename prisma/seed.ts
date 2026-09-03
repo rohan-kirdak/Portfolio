@@ -10,85 +10,102 @@ function hashPassword(password: string): string {
 
 const initialProjects = [
   {
-    title: 'StartUp Sensei',
-    description: 'AI-powered startup mentorship platform designed to help aspiring entrepreneurs with roadmap generation, mentor guidance, and real-time AI interaction.',
-    features: JSON.stringify(['Real-time Chat (Socket.IO)', 'OpenAI API Integration', 'Startup Roadmap Generator', 'Mentor Matching System', 'Progress Tracking Dashboard', 'Modern Responsive UI']),
-    technologies: JSON.stringify(['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Socket.IO', 'OpenAI API', 'Tailwind CSS', 'Framer Motion']),
-    image: '/projects/startup-sensei.png',
-    github: 'https://github.com/rohan-kirdak/Startup-sensei-main',
-    live: 'https://startup-sensei-main.vercel.app',
+    title: 'HireWave',
+    description: 'Full-stack recruitment platform connecting candidates with verified hiring partners, with role-based dashboards for candidates, recruiters, and admins.',
+    features: JSON.stringify(['JWT Auth & Role-Based Dashboards', 'AI Job Matching & Application Tracking', 'Stripe Payments & Cloudinary Uploads']),
+    technologies: JSON.stringify(['React.js', 'Node.js', 'Express.js', 'MongoDB', 'JWT', 'Tailwind CSS', 'Stripe', 'Cloudinary', 'Socket.IO']),
+    image: '/projects/hirewave.png',
+    github: 'https://github.com/rohan-kirdak/HireWave',
+    live: 'https://hire-wave-gamma.vercel.app',
     featured: true,
     order: 1
   },
   {
-    title: 'HireWave',
-    description: 'Modern recruitment and hiring platform built with MERN Stack featuring authentication, recruiter dashboard, candidate management, and premium responsive UI.',
-    features: JSON.stringify(['User Authentication', 'Recruiter Dashboard', 'Job Posting System', 'Candidate Management', 'Responsive Modern UI', 'Backend API Integration', 'Docker & GitHub Actions CI/CD']),
-    technologies: JSON.stringify(['React.js', 'Node.js', 'Express.js', 'MongoDB', 'JWT Auth', 'Tailwind CSS', 'Framer Motion', 'Docker', 'GitHub Actions']),
-    image: '/projects/hirewave.png',
-    github: 'https://github.com/rohan-kirdak/HireWave',
-    live: 'https://hire-wave-gamma.vercel.app',
+    title: 'StartUp Sensei',
+    description: 'Interactive AI startup mentorship portal engineered to guide aspiring founders through business strategy, ideation validation, and step-by-step execution.',
+    features: JSON.stringify(['Real-time AI Chat (Socket.IO)', 'Automated Startup Roadmap Generator', 'Independent Solo Full-Stack Build']),
+    technologies: JSON.stringify(['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Socket.IO', 'OpenAI API', 'Tailwind CSS']),
+    image: '/projects/startup-sensei.png',
+    github: 'https://github.com/rohan-kirdak/Startup-sensei-main',
+    live: 'https://startup-sensei-main.vercel.app',
     featured: true,
     order: 2
   },
   {
     title: 'ShopKart',
-    description: 'Full-stack e-commerce platform with modern UI, product management, cart functionality, and secure backend architecture.',
-    features: JSON.stringify(['Product Listing', 'Shopping Cart', 'Authentication System', 'Order Management', 'Responsive Design', 'Dynamic Backend Integration']),
-    technologies: JSON.stringify(['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS', 'Context API']),
+    description: 'Feature-rich MERN e-commerce application designed for seamless customer shopping, product discovery, and efficient order fulfillment.',
+    features: JSON.stringify(['Razorpay Payment Gateway Integration', 'Persistent Shopping Cart & Inventory Controls', 'Protected Admin Dashboard']),
+    technologies: JSON.stringify(['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Razorpay', 'Tailwind CSS']),
     image: '/projects/shopkart.png',
     github: 'https://github.com/rohan-kirdak/Shop-kart',
     live: 'https://shop-kart-eight-flax.vercel.app',
-    featured: true,
+    featured: false,
     order: 3
   },
   {
-    title: 'Project Rabbit',
-    description: 'Dynamic platform for students to upload, showcase, and sell academic projects with portfolio management and backend integration.',
-    features: JSON.stringify(['Project Upload System', 'Student Portfolio Management', 'Authentication System', 'Admin Dashboard', 'Database Management']),
-    technologies: JSON.stringify(['Node.js', 'Express.js', 'EJS', 'MySQL', 'Tailwind CSS', 'MVC Architecture']),
+    title: 'ProjectHub',
+    description: 'Academic project marketplace allowing computer science students to browse, purchase, and distribute verified course projects securely.',
+    features: JSON.stringify(['Student Academic Project Marketplace', 'Razorpay Payments & File Downloads', 'MySQL-Backed MVC Architecture']),
+    technologies: JSON.stringify(['Node.js', 'Express.js', 'EJS', 'MySQL', 'Razorpay', 'Tailwind CSS']),
     image: '/projects/project-rabbit.png',
     github: 'https://github.com/rohan-kirdak/project-rabbit-1',
-    live: '',
+    live: 'https://project-hub.vercel.app',
     featured: false,
     order: 4
+  },
+  {
+    title: 'MindEase',
+    description: 'Comprehensive mental wellness companion providing users with accessible digital tools for emotional tracking, self-care, and daily mindfulness.',
+    features: JSON.stringify(['Personalized AI Conversational Support', 'Real-time Mood & Wellness Tracking', 'Interactive Self-Care Toolkits']),
+    technologies: JSON.stringify(['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Gemini API', 'Tailwind CSS']),
+    image: '/projects/mindease.png',
+    github: 'https://github.com/rohan-kirdak/MindEase',
+    live: 'https://mindease-ai.vercel.app',
+    featured: false,
+    order: 5
   }
 ]
 
 const initialSkills = [
   // Frontend
-  { name: 'HTML', category: 'Frontend', level: 'Expert', order: 1 },
-  { name: 'CSS', category: 'Frontend', level: 'Expert', order: 2 },
-  { name: 'JavaScript', category: 'Frontend', level: 'Expert', order: 3 },
-  { name: 'TypeScript', category: 'Frontend', level: 'Advanced', order: 4 },
-  { name: 'React.js', category: 'Frontend', level: 'Expert', order: 5 },
-  { name: 'Next.js', category: 'Frontend', level: 'Expert', order: 6 },
-  { name: 'Tailwind CSS', category: 'Frontend', level: 'Expert', order: 7 },
-  { name: 'Framer Motion', category: 'Frontend', level: 'Advanced', order: 8 },
+  { name: 'React.js', category: 'Frontend', level: 'Core', order: 1 },
+  { name: 'Next.js', category: 'Frontend', level: 'Core', order: 2 },
+  { name: 'JavaScript', category: 'Frontend', level: 'Core', order: 3 },
+  { name: 'TypeScript', category: 'Frontend', level: 'Core', order: 4 },
+  { name: 'HTML5', category: 'Frontend', level: 'Core', order: 5 },
+  { name: 'CSS3', category: 'Frontend', level: 'Core', order: 6 },
+  { name: 'Tailwind CSS', category: 'Frontend', level: 'Core', order: 7 },
+  { name: 'Framer Motion', category: 'Frontend', level: 'Core', order: 8 },
+  { name: 'GSAP', category: 'Frontend', level: 'Core', order: 9 },
   // Backend
-  { name: 'Node.js', category: 'Backend', level: 'Expert', order: 1 },
-  { name: 'Express.js', category: 'Backend', level: 'Expert', order: 2 },
-  { name: 'REST APIs', category: 'Backend', level: 'Expert', order: 3 },
-  { name: 'GraphQL', category: 'Backend', level: 'Intermediate', order: 4 },
-  { name: 'Authentication', category: 'Backend', level: 'Advanced', order: 5 },
+  { name: 'Node.js', category: 'Backend', level: 'Core', order: 1 },
+  { name: 'Express.js', category: 'Backend', level: 'Core', order: 2 },
+  { name: 'REST APIs', category: 'Backend', level: 'Core', order: 3 },
+  { name: 'GraphQL', category: 'Backend', level: 'Core', order: 4 },
+  { name: 'JWT', category: 'Backend', level: 'Core', order: 5 },
+  { name: 'Socket.IO', category: 'Backend', level: 'Core', order: 6 },
   // Database
-  { name: 'MongoDB', category: 'Database', level: 'Expert', order: 1 },
-  { name: 'PostgreSQL', category: 'Database', level: 'Advanced', order: 2 },
-  { name: 'Prisma ORM', category: 'Database', level: 'Advanced', order: 3 },
-  { name: 'Database Design', category: 'Database', level: 'Advanced', order: 4 },
-  // Tools
-  { name: 'Git', category: 'Tools', level: 'Expert', order: 1 },
-  { name: 'GitHub', category: 'Tools', level: 'Expert', order: 2 },
-  { name: 'Docker', category: 'Tools', level: 'Advanced', order: 3 },
-  { name: 'Postman', category: 'Tools', level: 'Advanced', order: 4 },
-  // Deployment
-  { name: 'Vercel', category: 'Deployment', level: 'Expert', order: 1 },
-  { name: 'Docker', category: 'Deployment', level: 'Advanced', order: 2 },
-  { name: 'AWS', category: 'Deployment', level: 'Intermediate', order: 3 },
-  // AI Tools
-  { name: 'OpenAI', category: 'AI Tools', level: 'Advanced', order: 1 },
-  { name: 'Claude API', category: 'AI Tools', level: 'Advanced', order: 2 },
-  { name: 'Gemini', category: 'AI Tools', level: 'Advanced', order: 3 }
+  { name: 'MongoDB', category: 'Database', level: 'Core', order: 1 },
+  { name: 'MySQL', category: 'Database', level: 'Core', order: 2 },
+  { name: 'PostgreSQL', category: 'Database', level: 'Core', order: 3 },
+  { name: 'Mongoose', category: 'Database', level: 'Core', order: 4 },
+  { name: 'Prisma', category: 'Database', level: 'Core', order: 5 },
+  // Cloud & DevOps
+  { name: 'AWS', category: 'Cloud & DevOps', level: 'Core', order: 1 },
+  { name: 'Vercel', category: 'Cloud & DevOps', level: 'Core', order: 2 },
+  { name: 'Docker', category: 'Cloud & DevOps', level: 'Core', order: 3 },
+  { name: 'GitHub Actions', category: 'Cloud & DevOps', level: 'Core', order: 4 },
+  // AI & APIs
+  { name: 'Gemini API', category: 'AI & APIs', level: 'Core', order: 1 },
+  { name: 'OpenAI API', category: 'AI & APIs', level: 'Core', order: 2 },
+  // Tools & CS
+  { name: 'Git', category: 'Tools & CS', level: 'Core', order: 1 },
+  { name: 'GitHub', category: 'Tools & CS', level: 'Core', order: 2 },
+  { name: 'Postman', category: 'Tools & CS', level: 'Core', order: 3 },
+  { name: 'DSA', category: 'Tools & CS', level: 'Core', order: 4 },
+  { name: 'OOP', category: 'Tools & CS', level: 'Core', order: 5 },
+  { name: 'Database Design', category: 'Tools & CS', level: 'Core', order: 6 },
+  { name: 'System Design', category: 'Tools & CS', level: 'Core', order: 7 }
 ]
 
 const initialExperience = [
@@ -96,26 +113,26 @@ const initialExperience = [
     type: 'Internship',
     company: 'ScaleFull Technologies',
     position: 'Intern Software Engineer',
-    duration: 'Jan 2026 - Present',
-    description: 'Collaborating with core development team to build, optimize, and maintain production-ready web products and scalable backend services.',
+    duration: 'Jan 2026 – Present',
+    description: 'Collaborating with the core development team to build, optimize, and maintain production-ready web products and scalable backend services.',
     icon: '💻',
     order: 1
   },
   {
-    type: 'Internship',
+    type: 'Training',
     company: 'Wisdom Sprouts | Java By Kiran | Cyber Success',
     position: 'Trainee',
-    duration: '2026 - Present',
+    duration: '2026 – Present',
     description: 'Advanced technical training in Full Stack Development, Java, Aptitude, and Interview Placement Preparation.',
     icon: '💼',
     order: 2
   },
   {
-    type: 'Internship',
+    type: 'Experience',
     company: 'Kanak Digifex NextGen Pvt. Ltd.',
     position: 'Junior Web Developer',
-    duration: 'Feb 2025 - Mar 2025',
-    description: 'Built server-side rendered applications using Node.js, Express.js, EJS, and MySQL. Programmed backend controllers and database queries.',
+    duration: 'Feb 2025 – Mar 2025',
+    description: 'Built server-side rendered applications using Node.js, Express.js, EJS, and MySQL. Developed backend controllers and database queries.',
     icon: '⚡',
     order: 3
   },
@@ -123,19 +140,10 @@ const initialExperience = [
     type: 'Internship',
     company: 'Cloud Infotech',
     position: 'Web Development Intern',
-    duration: 'Jan 2025 - Feb 2025',
-    description: 'Developed responsive user interfaces with React.js and integrated REST APIs into MERN stack web applications.',
+    duration: 'Jan 2025 – Feb 2025',
+    description: 'Developed responsive React.js interfaces and integrated REST APIs into MERN stack applications.',
     icon: '🚀',
     order: 4
-  },
-  {
-    type: 'Education',
-    company: 'SPPU University',
-    position: 'B.E. Computer Engineering',
-    duration: '2022 - 2026',
-    description: 'Specialized in computer science fundamentals, full-stack web engineering, and software architectures.',
-    icon: '🎓',
-    order: 5
   }
 ]
 
@@ -155,12 +163,15 @@ async function main() {
   // Hero Profile
   await prisma.heroProfile.upsert({
     where: { id: 1 },
-    update: {},
+    update: {
+      tagline: 'Full Stack MERN & Next.js Developer',
+      bio: 'Building scalable, responsive and AI-powered web applications with modern technologies.'
+    },
     create: {
       id: 1,
       name: 'Rohan Kirdak',
-      tagline: 'Full Stack MERN Developer',
-      bio: 'Full Stack MERN & Next.js Developer passionate about crafting modern, scalable, and responsive web applications with rich user experiences.',
+      tagline: 'Full Stack MERN & Next.js Developer',
+      bio: 'Building scalable, responsive and AI-powered web applications with modern technologies.',
       yearsExp: '1.5+',
       projectsCount: '8+',
       contributionsCount: '200+',
@@ -169,28 +180,20 @@ async function main() {
     }
   })
 
-  // Projects
-  const projectCount = await prisma.project.count()
-  if (projectCount === 0) {
-    for (const proj of initialProjects) {
-      await prisma.project.create({ data: proj })
-    }
+  // Clear & Re-seed Projects, Skills, Experience
+  await prisma.project.deleteMany({})
+  for (const proj of initialProjects) {
+    await prisma.project.create({ data: proj })
   }
 
-  // Skills
-  const skillCount = await prisma.skill.count()
-  if (skillCount === 0) {
-    for (const skill of initialSkills) {
-      await prisma.skill.create({ data: skill })
-    }
+  await prisma.skill.deleteMany({})
+  for (const skill of initialSkills) {
+    await prisma.skill.create({ data: skill })
   }
 
-  // Experience
-  const expCount = await prisma.experience.count()
-  if (expCount === 0) {
-    for (const exp of initialExperience) {
-      await prisma.experience.create({ data: exp })
-    }
+  await prisma.experience.deleteMany({})
+  for (const exp of initialExperience) {
+    await prisma.experience.create({ data: exp })
   }
 
   console.log('Database Seeding Complete!')

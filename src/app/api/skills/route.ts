@@ -13,7 +13,21 @@ export async function GET() {
     }).catch(() => [])
 
     if (!skills || skills.length === 0) {
-      return NextResponse.json({ grouped: staticSkills, skills: [] }, {
+      const fallbackSkillsArray: any[] = []
+      let idCounter = 1
+      Object.entries(staticSkills).forEach(([category, names]) => {
+        names.forEach((name, idx) => {
+          fallbackSkillsArray.push({
+            id: idCounter++,
+            name,
+            category,
+            level: 'Core',
+            order: idx + 1,
+          })
+        })
+      })
+
+      return NextResponse.json({ grouped: staticSkills, skills: fallbackSkillsArray }, {
         headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' },
       })
     }

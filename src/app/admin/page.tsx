@@ -57,7 +57,6 @@ export default function AdminDashboard() {
   const [skillForm, setSkillForm] = useState({
     name: '',
     category: 'Frontend',
-    level: 'Advanced',
   })
 
   const [expModal, setExpModal] = useState(false)
@@ -253,7 +252,7 @@ export default function AdminDashboard() {
       })
       if (res.ok) {
         toast.success('Skill added!')
-        setSkillForm({ name: '', category: skillForm.category, level: 'Advanced' })
+        setSkillForm({ name: '', category: skillForm.category })
         fetchData()
       }
     } catch {
@@ -695,31 +694,18 @@ export default function AdminDashboard() {
                 />
               </div>
 
-              <div className="w-full md:w-48">
+              <div className="w-full md:w-56">
                 <label className="block text-xs font-semibold text-slate-400 mb-1.5 uppercase">Category</label>
                 <select
                   value={skillForm.category}
                   onChange={(e) => setSkillForm({ ...skillForm, category: e.target.value })}
                   className="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
                 >
-                  {['Frontend', 'Backend', 'Database', 'Tools', 'Deployment', 'AI Tools'].map((c) => (
+                  {['Frontend', 'Backend', 'Database', 'Cloud & DevOps', 'AI & APIs', 'Tools & CS'].map((c) => (
                     <option key={c} value={c}>
                       {c}
                     </option>
                   ))}
-                </select>
-              </div>
-
-              <div className="w-full md:w-44">
-                <label className="block text-xs font-semibold text-slate-400 mb-1.5 uppercase">Level</label>
-                <select
-                  value={skillForm.level}
-                  onChange={(e) => setSkillForm({ ...skillForm, level: e.target.value })}
-                  className="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
-                >
-                  <option value="Expert">Expert</option>
-                  <option value="Advanced">Advanced</option>
-                  <option value="Intermediate">Intermediate</option>
                 </select>
               </div>
 
@@ -734,11 +720,11 @@ export default function AdminDashboard() {
 
             {/* Categorized Skills display */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {['Frontend', 'Backend', 'Database', 'Tools', 'Deployment', 'AI Tools'].map((cat) => {
+              {['Frontend', 'Backend', 'Database', 'Cloud & DevOps', 'AI & APIs', 'Tools & CS'].map((cat) => {
                 const catSkills = skills.filter((s) => s.category === cat)
                 return (
                   <div key={cat} className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                    <div className="flex items-center justify-between mb-4 pb-3 border-slate-800 border-b">
                       <h3 className="font-bold text-slate-200 text-base">{cat}</h3>
                       <span className="text-xs bg-slate-800 text-slate-400 font-semibold px-2 py-0.5 rounded-full">
                         {catSkills.length}

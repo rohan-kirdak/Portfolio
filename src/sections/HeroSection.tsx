@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { ArrowUpRight, Sparkles, Download, Github } from 'lucide-react'
+import { ArrowUpRight, Sparkles, Download, Github, Code2, Rocket, MapPin, Linkedin, Mail } from 'lucide-react'
 import NextImage from 'next/image'
 import { profileInfo } from '@/data/portfolio'
 
@@ -13,6 +13,8 @@ export default function HeroSection() {
     badge: profileInfo.badge,
     bio: profileInfo.bio,
     github: profileInfo.github,
+    linkedin: profileInfo.linkedin,
+    email: profileInfo.email,
     resumeUrl: profileInfo.resumeUrl,
   })
 
@@ -34,43 +36,44 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative py-24 px-6 md:px-12 overflow-hidden bg-[#030014]">
-      {/* Background Orbs */}
-      <div className="glow-orb w-[350px] h-[350px] bg-purple-600/35 top-1/4 left-10 md:left-20" />
-      <div className="glow-orb w-[350px] h-[350px] bg-cyan-500/25 bottom-1/4 right-10 md:right-20 animate-float-delayed" />
-      <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none z-[1]" />
+    <section className="min-h-screen flex items-center justify-center relative py-20 px-6 md:px-12 overflow-hidden bg-[#030014]">
+      {/* Background Ambient Orbs */}
+      <div className="glow-orb w-[450px] h-[450px] bg-purple-600/30 top-1/4 left-5 pointer-events-none" />
+      <div className="glow-orb w-[500px] h-[500px] bg-cyan-500/25 bottom-1/4 right-5 pointer-events-none animate-float-delayed" />
+      <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none z-[1]" />
 
-      <div className="max-w-6xl mx-auto w-full grid lg:grid-cols-12 gap-12 items-center relative z-10">
-        {/* Left Hero Content */}
+      <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+        
+        {/* LEFT COLUMN */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="lg:col-span-7 flex flex-col items-start text-left space-y-6"
         >
-          {/* Company Badge */}
+          {/* Top Pill Badge */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5 }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400/40 transition-all backdrop-blur-md shadow-md"
+            className="flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-900/80 border border-cyan-400/30 hover:border-cyan-400/60 transition-all backdrop-blur-md shadow-lg shadow-cyan-500/10"
           >
-            <Sparkles className="w-4 h-4 text-cyan-400 animate-pulse" />
-            <span className="text-xs font-bold tracking-wide text-cyan-300 font-outfit">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-xs font-semibold tracking-wide text-slate-200 font-outfit">
               {profile.badge}
             </span>
           </motion.div>
 
-          {/* Name & Main Title */}
-          <div className="space-y-3">
+          {/* Main Title & Headline */}
+          <div className="space-y-2">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-extrabold font-syne tracking-tight text-white leading-tight"
+              className="text-4xl md:text-6xl lg:text-7xl font-extrabold font-syne tracking-tight text-white leading-[1.1]"
             >
               Hi, I&apos;m <br />
-              <span className="text-gradient-neon filter drop-shadow-[0_0_15px_rgba(0,212,255,0.3)]">
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent filter drop-shadow-[0_0_25px_rgba(0,212,255,0.4)]">
                 {profile.name}
               </span>
             </motion.h1>
@@ -79,34 +82,57 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-xl md:text-3xl font-bold font-syne text-slate-200 tracking-wide"
+              className="text-xl md:text-3xl font-bold font-syne text-slate-200 tracking-wide pt-1"
             >
               {profile.title}
             </motion.h2>
           </div>
 
-          {/* Bio / Tagline */}
+          {/* Bio Paragraph */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-slate-300 font-light max-w-lg leading-relaxed text-sm md:text-base font-outfit"
+            className="text-slate-400 font-light max-w-xl leading-relaxed text-sm md:text-base font-outfit"
           >
             {profile.bio}
           </motion.p>
 
-          {/* Action Buttons */}
+          {/* 3 Highlight Pills Row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.6 }}
+            className="flex flex-wrap gap-3 pt-1"
+          >
+            <div className="px-4 py-2 rounded-2xl bg-slate-900/70 border border-white/10 hover:border-cyan-400/40 transition-all flex items-center gap-2.5 backdrop-blur-md">
+              <Code2 className="w-4 h-4 text-cyan-400" />
+              <span className="text-xs font-semibold text-slate-300 font-outfit">Full Stack Development</span>
+            </div>
+
+            <div className="px-4 py-2 rounded-2xl bg-slate-900/70 border border-white/10 hover:border-purple-400/40 transition-all flex items-center gap-2.5 backdrop-blur-md">
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span className="text-xs font-semibold text-slate-300 font-outfit">AI-Powered Applications</span>
+            </div>
+
+            <div className="px-4 py-2 rounded-2xl bg-slate-900/70 border border-white/10 hover:border-pink-400/40 transition-all flex items-center gap-2.5 backdrop-blur-md">
+              <Rocket className="w-4 h-4 text-purple-400" />
+              <span className="text-xs font-semibold text-slate-300 font-outfit">Scalable Systems</span>
+            </div>
+          </motion.div>
+
+          {/* Action Buttons Row */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="flex flex-wrap gap-4 pt-4 w-full sm:w-auto items-center"
+            className="flex flex-wrap gap-4 pt-3 w-full sm:w-auto items-center"
           >
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href="#projects"
-              className="px-8 py-3.5 rounded-full font-bold font-syne text-sm text-[#030014] bg-gradient-to-r from-cyan-400 to-purple-500 hover:shadow-[0_0_30px_rgba(0,212,255,0.5)] transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-cyan-400/25"
+              className="px-8 py-3.5 rounded-full font-bold font-syne text-sm text-white bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 hover:shadow-[0_0_30px_rgba(0,212,255,0.5)] transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-cyan-400/25"
             >
               View Projects
               <ArrowUpRight className="w-4 h-4" />
@@ -118,7 +144,7 @@ export default function HeroSection() {
               href={profile.github}
               target="_blank"
               rel="noreferrer"
-              className="px-7 py-3.5 rounded-full font-bold font-syne text-sm text-white bg-white/5 border border-white/15 transition-all cursor-pointer flex items-center gap-2"
+              className="px-7 py-3.5 rounded-full font-bold font-syne text-sm text-white bg-slate-900/90 border border-white/15 transition-all cursor-pointer flex items-center gap-2 backdrop-blur-md"
             >
               <Github className="w-4 h-4 text-cyan-400" />
               GitHub
@@ -131,99 +157,160 @@ export default function HeroSection() {
               target="_blank"
               rel="noreferrer"
               download="Rohan_Kirdak_Resume.pdf"
-              className="px-6 py-3.5 rounded-full font-semibold font-outfit text-xs text-slate-300 hover:text-white border border-white/10 transition-all cursor-pointer flex items-center gap-2"
+              className="px-6 py-3.5 rounded-full font-semibold font-outfit text-xs text-slate-300 hover:text-white bg-slate-900/80 border border-white/10 transition-all cursor-pointer flex items-center gap-2 backdrop-blur-md"
             >
               <Download className="w-4 h-4 text-cyan-400" />
               Resume
             </motion.a>
           </motion.div>
+
+          {/* Location & Social Icons Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55, duration: 0.6 }}
+            className="flex items-center gap-4 pt-4 border-t border-white/5 w-full"
+          >
+            <div className="flex items-center gap-2 text-xs font-medium text-slate-400 font-outfit">
+              <MapPin className="w-4 h-4 text-purple-400" />
+              <span>Pune, Maharashtra, India</span>
+            </div>
+
+            <span className="text-slate-700">|</span>
+
+            <div className="flex items-center gap-3">
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 hover:border-cyan-400 flex items-center justify-center text-cyan-400 hover:bg-cyan-400/10 transition-all"
+                title="LinkedIn"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noreferrer"
+                className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 hover:border-cyan-400 flex items-center justify-center text-cyan-400 hover:bg-cyan-400/10 transition-all"
+                title="GitHub"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+              <a
+                href={`mailto:${profile.email}`}
+                className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 hover:border-cyan-400 flex items-center justify-center text-cyan-400 hover:bg-cyan-400/10 transition-all"
+                title="Email"
+              >
+                <Mail className="w-4 h-4" />
+              </a>
+            </div>
+          </motion.div>
         </motion.div>
 
-        {/* Right Hero Section - Prominent Avatar Portrait Showcase */}
+        {/* RIGHT COLUMN - CIRCULAR GLOWING PORTRAIT WITH FLOATING BADGES */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: 'easeOut' }}
           className="lg:col-span-5 relative flex justify-center items-center"
         >
-          <div className="relative w-80 h-96 md:w-[380px] md:h-[480px] flex items-center justify-center">
-            {/* Animated Rotating Gradient Background Aura */}
+          <div className="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[440px] md:h-[440px] flex items-center justify-center">
+            
+            {/* Outer Circular Neon Ring with Dotted Ring */}
+            <div className="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400/20 animate-spin-slow" />
+
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500/30 via-purple-500/20 to-pink-500/30 blur-3xl opacity-70 pointer-events-none"
-            />
+              transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+              className="absolute inset-2 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_60px_rgba(0,212,255,0.35)]"
+            >
+              <div className="w-full h-full bg-[#030014] rounded-full" />
+            </motion.div>
 
-            {/* Glowing Glass Frame Container */}
-            <div className="relative w-full h-full rounded-3xl p-2 bg-gradient-to-b from-cyan-400/20 via-purple-500/20 to-slate-900/60 border border-white/20 backdrop-blur-xl shadow-[0_0_50px_rgba(0,212,255,0.25)] flex items-end justify-center overflow-hidden group">
+            {/* Circular Inner Glow Portal */}
+            <div className="relative w-[92%] h-[92%] rounded-full overflow-hidden bg-gradient-to-b from-purple-900/40 via-purple-950/80 to-[#030014] border border-white/10 flex items-end justify-center shadow-inner">
               
-              {/* Subtle inner grid pattern */}
-              <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
+              {/* Radial Cyan/Purple Backlight */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-gradient-to-tr from-cyan-500/30 to-purple-600/40 blur-2xl pointer-events-none" />
 
-              {/* Avatar Portrait Image */}
+              {/* Dotted Pattern Overlay */}
+              <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
+
+              {/* Rohan Character Avatar Image */}
               <div className="relative w-full h-full flex items-end justify-center">
                 <NextImage
                   src="/rohan-hero.png"
                   alt="Rohan Kirdak"
                   fill
                   priority
-                  sizes="(max-width: 768px) 100vw, 400px"
-                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105 filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)]"
+                  sizes="(max-width: 768px) 100vw, 450px"
+                  className="object-cover object-top filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)] scale-105"
                 />
               </div>
 
-              {/* Bottom Gradient Overlay for seamless blending */}
-              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#030014] via-[#030014]/60 to-transparent z-10" />
-
-              {/* Developer Tag Pill inside frame */}
-              <div className="absolute bottom-4 z-20 px-4 py-1.5 rounded-full bg-slate-950/80 border border-cyan-400/40 text-xs font-bold font-syne text-cyan-300 shadow-xl flex items-center gap-2 backdrop-blur-md">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span>Rohan Kirdak • Full Stack Developer</span>
-              </div>
+              {/* Bottom Gradient Fade */}
+              <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-[#030014] via-[#030014]/70 to-transparent z-10" />
             </div>
 
-            {/* Floating Badge 1: React.js */}
+            {/* FLOATING BADGE 1: React & Next.js (Top Left) */}
             <motion.div
-              animate={{ y: [0, -12, 0] }}
+              animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -top-3 -left-4 p-3 glass-card border-white/15 rounded-2xl flex items-center gap-2 shadow-2xl shadow-black/80 z-30"
+              className="absolute top-4 -left-4 sm:left-0 z-30 px-3.5 py-2 rounded-full bg-slate-900/90 border border-cyan-400/40 shadow-xl shadow-cyan-500/10 flex items-center gap-2 backdrop-blur-md"
             >
-              <div className="w-7 h-7 rounded-xl bg-cyan-400/20 border border-cyan-400/40 flex items-center justify-center text-sm">⚛️</div>
+              <div className="w-5 h-5 rounded-full bg-cyan-400/20 flex items-center justify-center text-xs">⚛️</div>
               <span className="text-xs font-bold text-white font-outfit">React & Next.js</span>
             </motion.div>
 
-            {/* Floating Badge 2: ScaleFull Tech */}
+            {/* FLOATING BADGE 2: Next.js (Top Right) */}
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 4, delay: 1, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute top-12 -right-4 sm:right-2 z-30 px-3.5 py-2 rounded-full bg-slate-900/90 border border-purple-400/40 shadow-xl shadow-purple-500/10 flex items-center gap-2 backdrop-blur-md"
+            >
+              <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-xs font-extrabold text-white">N</span>
+              <span className="text-xs font-bold text-white font-outfit">Next.js</span>
+            </motion.div>
+
+            {/* FLOATING BADGE 3: Node.js (Mid Left) */}
             <motion.div
               animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 4, delay: 1, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -bottom-4 -right-4 p-3 glass-card border-white/15 rounded-2xl flex items-center gap-2.5 shadow-2xl shadow-black/80 z-30"
+              transition={{ duration: 4, delay: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute bottom-28 -left-6 sm:-left-2 z-30 px-3.5 py-2 rounded-full bg-slate-900/90 border border-emerald-400/40 shadow-xl shadow-emerald-500/10 flex items-center gap-2 backdrop-blur-md"
             >
-              <div className="w-7 h-7 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-sm">💻</div>
+              <span className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px] font-bold text-emerald-400">JS</span>
+              <span className="text-xs font-bold text-white font-outfit">Node.js</span>
+            </motion.div>
+
+            {/* FLOATING BADGE 4: AI & Gemini (Mid Right) */}
+            <motion.div
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 4, delay: 0.8, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute bottom-32 -right-6 sm:-right-2 z-30 px-3.5 py-2 rounded-full bg-slate-900/90 border border-pink-400/40 shadow-xl shadow-pink-500/10 flex items-center gap-2 backdrop-blur-md"
+            >
+              <Sparkles className="w-4 h-4 text-pink-400" />
+              <span className="text-xs font-bold text-white font-outfit">AI & Gemini</span>
+            </motion.div>
+
+            {/* FLOATING BADGE 5: ScaleFull Tech Card (Bottom Right Overlay) */}
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 4, delay: 2, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute -bottom-2 right-4 sm:right-8 z-30 px-4 py-2.5 rounded-2xl bg-slate-900/95 border border-cyan-400/40 shadow-2xl shadow-black/80 flex items-center gap-3 backdrop-blur-md"
+            >
+              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-cyan-400/20 to-purple-500/20 border border-cyan-400/30 flex items-center justify-center text-sm">
+                💻
+              </div>
               <div className="text-left">
-                <p className="text-[10px] text-slate-400 font-outfit uppercase">Internship</p>
+                <p className="text-[9px] text-slate-400 font-outfit uppercase font-semibold">INTERNSHIP</p>
                 <p className="text-xs font-bold text-white font-syne">ScaleFull Technologies</p>
               </div>
             </motion.div>
 
-            {/* Floating Badge 3: Node.js */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, delay: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-28 -right-6 p-2.5 glass-card border-white/15 rounded-2xl flex items-center gap-2 shadow-2xl shadow-black/80 z-30"
-            >
-              <span className="text-xs font-bold text-emerald-400 font-outfit">Node.js 🟢</span>
-            </motion.div>
-
-            {/* Floating Badge 4: AI & Gemini */}
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 4, delay: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute bottom-28 -left-6 p-2.5 glass-card border-white/15 rounded-2xl flex items-center gap-2 shadow-2xl shadow-black/80 z-30"
-            >
-              <span className="text-xs font-bold text-purple-300 font-outfit">AI & Gemini 🤖</span>
-            </motion.div>
           </div>
         </motion.div>
+
       </div>
     </section>
   )

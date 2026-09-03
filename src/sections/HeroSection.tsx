@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { ArrowUpRight, Sparkles, Download, Github, Terminal } from 'lucide-react'
+import { ArrowUpRight, Sparkles, Download, Github } from 'lucide-react'
+import NextImage from 'next/image'
 import { profileInfo } from '@/data/portfolio'
 
 export default function HeroSection() {
@@ -35,11 +36,12 @@ export default function HeroSection() {
   return (
     <section className="min-h-screen flex items-center justify-center relative py-24 px-6 md:px-12 overflow-hidden bg-[#030014]">
       {/* Background Orbs */}
-      <div className="glow-orb w-[300px] h-[300px] bg-purple-600/35 top-1/4 left-10 md:left-20" />
-      <div className="glow-orb w-[300px] h-[300px] bg-cyan-500/25 bottom-1/4 right-10 md:right-20 animate-float-delayed" />
+      <div className="glow-orb w-[350px] h-[350px] bg-purple-600/35 top-1/4 left-10 md:left-20" />
+      <div className="glow-orb w-[350px] h-[350px] bg-cyan-500/25 bottom-1/4 right-10 md:right-20 animate-float-delayed" />
       <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none z-[1]" />
 
       <div className="max-w-6xl mx-auto w-full grid lg:grid-cols-12 gap-12 items-center relative z-10">
+        {/* Left Hero Content */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
@@ -137,64 +139,88 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Right Interactive Visual */}
+        {/* Right Hero Section - Prominent Avatar Portrait Showcase */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
           className="lg:col-span-5 relative flex justify-center items-center"
         >
-          <div className="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center">
+          <div className="relative w-80 h-96 md:w-[380px] md:h-[480px] flex items-center justify-center">
+            {/* Animated Rotating Gradient Background Aura */}
             <motion.div
-              animate={{ 
-                rotate: 360,
-                borderRadius: ["42% 58% 70% 30% / 45% 45% 55% 55%", "70% 30% 52% 48% / 60% 40% 60% 40%", "42% 58% 70% 30% / 45% 45% 55% 55%"]
-              }}
-              transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 via-purple-600/10 to-pink-500/20 border border-white/15 backdrop-blur-lg shadow-[0_0_80px_rgba(124,58,237,0.25)] flex items-center justify-center overflow-hidden"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+              className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500/30 via-purple-500/20 to-pink-500/30 blur-3xl opacity-70 pointer-events-none"
+            />
+
+            {/* Glowing Glass Frame Container */}
+            <div className="relative w-full h-full rounded-3xl p-2 bg-gradient-to-b from-cyan-400/20 via-purple-500/20 to-slate-900/60 border border-white/20 backdrop-blur-xl shadow-[0_0_50px_rgba(0,212,255,0.25)] flex items-end justify-center overflow-hidden group">
+              
+              {/* Subtle inner grid pattern */}
+              <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
+
+              {/* Avatar Portrait Image */}
+              <div className="relative w-full h-full flex items-end justify-center">
+                <NextImage
+                  src="/rohan-hero.png"
+                  alt="Rohan Kirdak"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 400px"
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105 filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)]"
+                />
+              </div>
+
+              {/* Bottom Gradient Overlay for seamless blending */}
+              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#030014] via-[#030014]/60 to-transparent z-10" />
+
+              {/* Developer Tag Pill inside frame */}
+              <div className="absolute bottom-4 z-20 px-4 py-1.5 rounded-full bg-slate-950/80 border border-cyan-400/40 text-xs font-bold font-syne text-cyan-300 shadow-xl flex items-center gap-2 backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span>Rohan Kirdak • Full Stack Developer</span>
+              </div>
+            </div>
+
+            {/* Floating Badge 1: React.js */}
+            <motion.div
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute -top-3 -left-4 p-3 glass-card border-white/15 rounded-2xl flex items-center gap-2 shadow-2xl shadow-black/80 z-30"
             >
-              <div className="opacity-25 text-[10px] font-mono text-cyan-300 w-[80%] text-left select-none space-y-1">
-                <p className="text-purple-400">const developer = &#123;</p>
-                <p className="pl-4">name: &quot;{profile.name}&quot;,</p>
-                <p className="pl-4">role: &quot;Full Stack MERN & Next.js&quot;,</p>
-                <p className="pl-4 text-pink-400">company: &quot;ScaleFull Tech&quot;,</p>
-                <p className="pl-4 text-cyan-400">skills: [&quot;React&quot;, &quot;Next.js&quot;, &quot;Node&quot;],</p>
-                <p className="text-purple-400">&#125;;</p>
+              <div className="w-7 h-7 rounded-xl bg-cyan-400/20 border border-cyan-400/40 flex items-center justify-center text-sm">⚛️</div>
+              <span className="text-xs font-bold text-white font-outfit">React & Next.js</span>
+            </motion.div>
+
+            {/* Floating Badge 2: ScaleFull Tech */}
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 4, delay: 1, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute -bottom-4 -right-4 p-3 glass-card border-white/15 rounded-2xl flex items-center gap-2.5 shadow-2xl shadow-black/80 z-30"
+            >
+              <div className="w-7 h-7 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-sm">💻</div>
+              <div className="text-left">
+                <p className="text-[10px] text-slate-400 font-outfit uppercase">Internship</p>
+                <p className="text-xs font-bold text-white font-syne">ScaleFull Technologies</p>
               </div>
             </motion.div>
 
+            {/* Floating Badge 3: Node.js */}
             <motion.div
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -top-4 left-6 p-3 glass-card border-white/10 rounded-2xl flex items-center gap-2 shadow-xl shadow-black/50"
-            >
-              <div className="w-6 h-6 rounded-full bg-cyan-400/20 flex items-center justify-center text-xs">⚛️</div>
-              <span className="text-xs font-bold text-white font-outfit">React.js</span>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [0, 15, 0] }}
-              transition={{ duration: 4, delay: 1, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -bottom-6 right-8 p-3 glass-card border-white/10 rounded-2xl flex items-center gap-2 shadow-xl shadow-black/50"
-            >
-              <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center text-xs">🟢</div>
-              <span className="text-xs font-bold text-white font-outfit">Node.js</span>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [0, -12, 0] }}
+              animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, delay: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-20 -right-8 p-3 glass-card border-white/10 rounded-2xl flex items-center gap-2 shadow-xl shadow-black/50"
+              className="absolute top-28 -right-6 p-2.5 glass-card border-white/15 rounded-2xl flex items-center gap-2 shadow-2xl shadow-black/80 z-30"
             >
-              <span className="text-xs font-bold text-white font-outfit">Next.js 🚀</span>
+              <span className="text-xs font-bold text-emerald-400 font-outfit">Node.js 🟢</span>
             </motion.div>
 
+            {/* Floating Badge 4: AI & Gemini */}
             <motion.div
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="w-14 h-14 rounded-2xl bg-slate-900 border border-white/15 shadow-2xl flex items-center justify-center z-10"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 4, delay: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute bottom-28 -left-6 p-2.5 glass-card border-white/15 rounded-2xl flex items-center gap-2 shadow-2xl shadow-black/80 z-30"
             >
-              <Terminal className="w-6 h-6 text-cyan-400" />
+              <span className="text-xs font-bold text-purple-300 font-outfit">AI & Gemini 🤖</span>
             </motion.div>
           </div>
         </motion.div>
